@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmi.version="1.2" timestamp="2015-10-24T13:40:58" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
+<XMI verified="false" xmi.version="1.2" timestamp="2015-10-24T15:28:33" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
@@ -302,7 +302,7 @@
      </UML:Namespace.ownedElement>
      <XMI.extension xmi.extender="umbrello">
       <diagrams>
-       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="entity relationship diagram" font="Sans Serif,9,-1,0,50,0,0,0,0,0" canvasheight="20183.15129449839" canvaswidth="49185.61165048563" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#d3d3d3" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="66" xmi.id="522q1jEZ2rDc" documentation="" showscope="1" snapgrid="0" showatts="1" type="9">
+       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="entity relationship diagram" font="Sans Serif,9,-1,0,50,0,0,0,0,0" canvasheight="20183.15129449839" canvaswidth="49185.61165048563" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#d3d3d3" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="96" xmi.id="522q1jEZ2rDc" documentation="" showscope="1" snapgrid="0" showatts="1" type="9">
         <widgets>
          <entitywidget width="118" showstereotype="1" x="-1306.563106796116" usesdiagramusefillcolor="0" y="-1304.388349514563" usesdiagramfillcolor="0" isinstance="0" localid="27xiWg7ci8Qk" fillcolor="#ffff00" height="30" linecolor="none" xmi.id="4d5FGjaboefd" textcolor="#000000" usefillcolor="1" linewidth="0" font="Sans Serif,9,-1,5,75,1,0,0,0,0"/>
          <entitywidget width="100" showstereotype="1" x="-1329.994704324801" usesdiagramusefillcolor="0" y="-1179.678434833775" usesdiagramfillcolor="0" isinstance="0" localid="GnjytAggmvVG" fillcolor="#ffff00" height="30" linecolor="none" xmi.id="CLu1zYezdbg9" textcolor="#000000" usefillcolor="1" linewidth="0" font="Sans Serif,9,-1,0,50,0,0,0,0,0"/>
