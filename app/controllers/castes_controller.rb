@@ -1,6 +1,7 @@
 class CastesController < ApplicationController
   before_action :set_character_type
   before_action :set_caste, only: [:show, :edit, :update, :destroy]
+  before_action :set_abilities, only: :show
 
   # GET /castes
   # GET /castes.json
@@ -72,8 +73,12 @@ class CastesController < ApplicationController
       @caste = @character_type.castes.includes(:abilities).find(params[:id])
     end
 
+    def set_abilities
+      @abilities = @caste.abilities
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def caste_params
-      params.require(:caste).permit(:name, :anima_effect)
+      params.require(:caste).permit(:name, :anima_effect, :abilities)
     end
 end

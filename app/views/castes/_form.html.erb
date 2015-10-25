@@ -15,7 +15,9 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
     <%= f.label :anima_effect %><br>
-    <%= f.text_area :anima_effect %>
+    <%= f.text_area :anima_effect %><br>
+    <%= f.label :abilities %><br>
+    <%= f.collection_select :abilities, Ability.order(:name), :id, :name, {}, {multiple: true} %>
   </div>
   <div class="actions">
     <%= f.submit %>
