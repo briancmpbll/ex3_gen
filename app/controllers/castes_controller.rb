@@ -1,4 +1,5 @@
 class CastesController < ApplicationController
+  before_action :set_character_type
   before_action :set_caste, only: [:show, :edit, :update, :destroy]
 
   # GET /castes
@@ -24,11 +25,11 @@ class CastesController < ApplicationController
   # POST /castes
   # POST /castes.json
   def create
-    @caste = Caste.new(caste_params)
+    @caste = @character_type.castes.new(caste_params)
 
     respond_to do |format|
       if @caste.save
-        format.html { redirect_to @caste, notice: 'Caste was successfully created.' }
+        format.html { redirect_to [@character_type, @caste], notice: 'Caste was successfully created.' }
         format.json { render :show, status: :created, location: @caste }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class CastesController < ApplicationController
   def update
     respond_to do |format|
       if @caste.update(caste_params)
-        format.html { redirect_to @caste, notice: 'Caste was successfully updated.' }
+        format.html { redirect_to [@character_type, @caste], notice: 'Caste was successfully updated.' }
         format.json { render :show, status: :ok, location: @caste }
       else
         format.html { render :edit }
@@ -56,19 +57,23 @@ class CastesController < ApplicationController
   def destroy
     @caste.destroy
     respond_to do |format|
-      format.html { redirect_to castes_url, notice: 'Caste was successfully destroyed.' }
+      format.html { redirect_to character_type_castes_url, notice: 'Caste was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_character_type
+      @character_type = CharacterType.find(params[:character_type_id])
+    end
+
     def set_caste
-      @caste = Caste.find(params[:id])
+      @caste = @character_type.castes.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def caste_params
-      params.require(:caste).permit(:name, :anima_effect, :character_type)
+      params.require(:caste).permit(:name, :anima_effect)
     end
 end

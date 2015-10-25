@@ -1,4 +1,4 @@
-<%= form_for(@caste) do |f| %>
+<%= form_for([@character_type, @caste]) do |f| %>
   <% if @caste.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@caste.errors.count, "error") %> prohibited this caste from being saved:</h2>
@@ -15,9 +15,7 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
     <%= f.label :anima_effect %><br>
-    <%= f.text_area :anima_effect %><br>
-    <%= f.label :character_type %>
-    <%= f.collection_select :character_type, CharacterType.order(:name), :id, :name %>
+    <%= f.text_area :anima_effect %>
   </div>
   <div class="actions">
     <%= f.submit %>
