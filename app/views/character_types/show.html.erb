@@ -5,5 +5,9 @@
   <%= @character_type.name %>
 </p>
 
+<% @character_type.castes.each do |caste| %>
+  <%= caste %>
+<% end %>
+
 <%= link_to 'Edit', edit_character_type_path(@character_type) %> |
 <%= link_to 'Back', character_types_path %>
