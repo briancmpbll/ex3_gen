@@ -1,5 +1,6 @@
 class CharacterTypesController < ApplicationController
   before_action :set_character_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_castes, only: :show
 
   # GET /character_types
   # GET /character_types.json
@@ -65,6 +66,10 @@ class CharacterTypesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_character_type
       @character_type = CharacterType.find(params[:id])
+    end
+
+    def set_castes
+      @castes = @character_type.castes.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

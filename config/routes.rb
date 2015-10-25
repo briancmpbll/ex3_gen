@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root "character_types#index"
+
   resources :character_types do
     resources :castes
   end

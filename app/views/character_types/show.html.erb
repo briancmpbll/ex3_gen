@@ -1,13 +1,15 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Character Type</h1>
 <p>
   <strong>Name:</strong>
   <%= @character_type.name %>
 </p>
 
-<% @character_type.castes.each do |caste| %>
-  <%= caste %>
-<% end %>
+<%= render "castes/list" %>
+
+<br>
 
 <%= link_to 'Edit', edit_character_type_path(@character_type) %> |
+<%= link_to 'Add Caste', new_character_type_caste_path(@character_type) %> |
 <%= link_to 'Back', character_types_path %>

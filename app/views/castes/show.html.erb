@@ -5,5 +5,10 @@
   <%= @caste.name %>
 </p>
 
+<p>
+  <strong>Anima Effect:</strong>
+  <%= @caste.anima_effect %>
+</p>
+
 <%= link_to 'Edit', edit_character_type_caste_path(@character_type, @caste) %> |
-<%= link_to 'Back', character_type_castes_path %>
+<%= link_to 'Back', character_type_path(@character_type) %>

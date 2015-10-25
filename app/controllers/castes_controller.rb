@@ -29,7 +29,7 @@ class CastesController < ApplicationController
 
     respond_to do |format|
       if @caste.save
-        format.html { redirect_to [@character_type, @caste], notice: 'Caste was successfully created.' }
+        format.html { redirect_to [@character_type], notice: 'Caste was successfully created.' }
         format.json { render :show, status: :created, location: @caste }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class CastesController < ApplicationController
   def update
     respond_to do |format|
       if @caste.update(caste_params)
-        format.html { redirect_to [@character_type, @caste], notice: 'Caste was successfully updated.' }
+        format.html { redirect_to [@character_type], notice: 'Caste was successfully updated.' }
         format.json { render :show, status: :ok, location: @caste }
       else
         format.html { render :edit }
