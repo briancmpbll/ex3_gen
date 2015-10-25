@@ -11,16 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025212052) do
+ActiveRecord::Schema.define(version: 20151025214617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "abilities", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "abilities", ["name"], name: "index_abilities_on_name", unique: true, using: :btree
+
+  create_table "caste_abilities", force: :cascade do |t|
+    t.integer "caste_id"
+    t.integer "ability_id"
+  end
+
+  add_index "caste_abilities", ["ability_id"], name: "index_caste_abilities_on_ability_id", using: :btree
+  add_index "caste_abilities", ["caste_id"], name: "index_caste_abilities_on_caste_id", using: :btree
 
   create_table "castes", force: :cascade do |t|
     t.string   "name",              null: false
@@ -30,11 +40,17 @@ ActiveRecord::Schema.define(version: 20151025212052) do
     t.integer  "character_type_id"
   end
 
+  add_index "castes", ["name"], name: "index_castes_on_name", unique: true, using: :btree
+
   create_table "character_types", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_index "character_types", ["name"], name: "index_character_types_on_name", unique: true, using: :btree
+
+  add_foreign_key "caste_abilities", "abilities"
+  add_foreign_key "caste_abilities", "castes"
   add_foreign_key "castes", "character_types"
 end

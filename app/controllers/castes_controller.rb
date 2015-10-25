@@ -69,7 +69,7 @@ class CastesController < ApplicationController
     end
 
     def set_caste
-      @caste = @character_type.castes.find(params[:id])
+      @caste = @character_type.castes.includes(:abilities).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
