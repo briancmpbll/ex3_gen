@@ -18,7 +18,8 @@
     <%= f.text_area :anima_effect %><br>
     <%= f.label :abilities %><br>
     <%= f.collection_select :ability_ids, Ability.order(:name), :id, :name,
-      {selected: @caste.ability_ids}, {multiple: true, size: 26} %>
+      {selected: @caste.ability_ids, include_blank: false, include_hidden: false},
+      {multiple: true, size: 26} %>
   </div>
   <div class="actions">
     <%= f.submit %>
