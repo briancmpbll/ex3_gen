@@ -28,6 +28,8 @@ class CastesController < ApplicationController
   def create
     @caste = @character_type.castes.new(caste_params)
 
+    update_abilities
+
     respond_to do |format|
       if @caste.save
         format.html { redirect_to [@character_type], notice: 'Caste was successfully created.' }
@@ -42,6 +44,8 @@ class CastesController < ApplicationController
   # PATCH/PUT /castes/1
   # PATCH/PUT /castes/1.json
   def update
+    update_abilities
+
     respond_to do |format|
       if @caste.update(caste_params)
         format.html { redirect_to [@character_type], notice: 'Caste was successfully updated.' }
@@ -79,6 +83,17 @@ class CastesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def caste_params
-      params.require(:caste).permit(:name, :anima_effect, :abilities)
+      params.require(:caste).permit(:name, :anima_effect)
+    end
+
+    def ability_ids_params
+      params.require(:caste).require(:ability_ids).reject!{|a| a==""}
+    end
+
+    def update_abilities
+      @caste.abilities.clear
+      ability_ids_params.each do |ability_id|
+        @caste.abilities << Ability.find(ability_id)
+      end
     end
 end

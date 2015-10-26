@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025214617) do
+ActiveRecord::Schema.define(version: 20151025234701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20151025214617) do
   end
 
   add_index "caste_abilities", ["ability_id"], name: "index_caste_abilities_on_ability_id", using: :btree
+  add_index "caste_abilities", ["caste_id", "ability_id"], name: "index_caste_abilities_on_caste_id_and_ability_id", unique: true, using: :btree
   add_index "caste_abilities", ["caste_id"], name: "index_caste_abilities_on_caste_id", using: :btree
 
   create_table "castes", force: :cascade do |t|
