@@ -5,5 +5,10 @@
   <%= @attribute_category.name %>
 </p>
 
+<%= render "character_attributes/list" %>
+
+<br>
+
 <%= link_to 'Edit', edit_attribute_category_path(@attribute_category) %> |
+<%= link_to 'Add Attribute', new_attribute_category_character_attribute_path(@attribute_category) %> |
 <%= link_to 'Back', attribute_categories_path %>

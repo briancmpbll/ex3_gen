@@ -6,7 +6,7 @@ class CastesController < ApplicationController
   # GET /castes
   # GET /castes.json
   def index
-    @castes = Caste.all
+    @castes = @character_type.castes
   end
 
   # GET /castes/1

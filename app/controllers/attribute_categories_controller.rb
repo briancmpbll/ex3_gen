@@ -1,5 +1,6 @@
 class AttributeCategoriesController < ApplicationController
   before_action :set_attribute_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_character_attributes, only: :show
 
   # GET /attribute_categories
   # GET /attribute_categories.json
@@ -65,6 +66,10 @@ class AttributeCategoriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_attribute_category
       @attribute_category = AttributeCategory.find(params[:id])
+    end
+
+    def set_character_attributes
+      @character_attributes = @attribute_category.character_attributes.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

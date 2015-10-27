@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
-  resources :attribute_categories
   resources :abilities
-  root "character_types#index"
+
+  resources :attribute_categories do
+    resources :character_attributes
+  end
 
   resources :character_types do
     resources :castes
   end
+
+  root "character_types#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

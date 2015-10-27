@@ -51,6 +51,16 @@ ActiveRecord::Schema.define(version: 20151027054439) do
 
   add_index "castes", ["name"], name: "index_castes_on_name", unique: true, using: :btree
 
+  create_table "character_attributes", force: :cascade do |t|
+    t.integer  "attribute_category_id"
+    t.string   "name",                  null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "character_attributes", ["attribute_category_id"], name: "index_character_attributes_on_attribute_category_id", using: :btree
+  add_index "character_attributes", ["name"], name: "index_character_attributes_on_name", unique: true, using: :btree
+
   create_table "character_types", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
@@ -62,4 +72,5 @@ ActiveRecord::Schema.define(version: 20151027054439) do
   add_foreign_key "caste_abilities", "abilities"
   add_foreign_key "caste_abilities", "castes"
   add_foreign_key "castes", "character_types"
+  add_foreign_key "character_attributes", "attribute_categories"
 end
