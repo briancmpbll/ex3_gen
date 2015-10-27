@@ -1,6 +1,5 @@
 class Ability < ActiveRecord::Base
-  has_many :caste_abilities
-  has_many :castes, through: :caste_abilities
+  has_and_belongs_to_many :castes
 
   validates :name, presence: true, uniqueness: true
 end

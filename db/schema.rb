@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027070906) do
+ActiveRecord::Schema.define(version: 20151027082507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,27 @@ ActiveRecord::Schema.define(version: 20151027070906) do
 
   add_index "abilities", ["name"], name: "index_abilities_on_name", unique: true, using: :btree
 
+  create_table "abilities_castes", id: false, force: :cascade do |t|
+    t.integer "caste_id"
+    t.integer "ability_id"
+  end
+
+  add_index "abilities_castes", ["ability_id"], name: "index_abilities_castes_on_ability_id", using: :btree
+  add_index "abilities_castes", ["caste_id", "ability_id"], name: "index_abilities_castes_on_caste_id_and_ability_id", unique: true, using: :btree
+  add_index "abilities_castes", ["caste_id"], name: "index_abilities_castes_on_caste_id", using: :btree
+
+  create_table "anima_effects", force: :cascade do |t|
+    t.integer  "character_type_id", null: false
+    t.integer  "caste_id"
+    t.string   "condition",         null: false
+    t.string   "effect",            null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "anima_effects", ["caste_id"], name: "index_anima_effects_on_caste_id", using: :btree
+  add_index "anima_effects", ["character_type_id"], name: "index_anima_effects_on_character_type_id", using: :btree
+
   create_table "attribute_categories", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
@@ -32,18 +53,8 @@ ActiveRecord::Schema.define(version: 20151027070906) do
 
   add_index "attribute_categories", ["name"], name: "index_attribute_categories_on_name", unique: true, using: :btree
 
-  create_table "caste_abilities", force: :cascade do |t|
-    t.integer "caste_id",   null: false
-    t.integer "ability_id", null: false
-  end
-
-  add_index "caste_abilities", ["ability_id"], name: "index_caste_abilities_on_ability_id", using: :btree
-  add_index "caste_abilities", ["caste_id", "ability_id"], name: "index_caste_abilities_on_caste_id_and_ability_id", unique: true, using: :btree
-  add_index "caste_abilities", ["caste_id"], name: "index_caste_abilities_on_caste_id", using: :btree
-
   create_table "castes", force: :cascade do |t|
     t.string   "name",              null: false
-    t.string   "anima_effect",      null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "character_type_id", null: false
@@ -69,8 +80,10 @@ ActiveRecord::Schema.define(version: 20151027070906) do
 
   add_index "character_types", ["name"], name: "index_character_types_on_name", unique: true, using: :btree
 
-  add_foreign_key "caste_abilities", "abilities"
-  add_foreign_key "caste_abilities", "castes"
+  add_foreign_key "abilities_castes", "abilities"
+  add_foreign_key "abilities_castes", "castes"
+  add_foreign_key "anima_effects", "castes"
+  add_foreign_key "anima_effects", "character_types"
   add_foreign_key "castes", "character_types"
   add_foreign_key "character_attributes", "attribute_categories"
 end
