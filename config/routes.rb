@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :attribute_categories
   resources :abilities
   root "character_types#index"
 

@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Attribute Categories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @attribute_categories.each do |attribute_category| %>
+      <tr>
+        <td><%= attribute_category.name %></td>
+        <td><%= link_to 'Show', attribute_category %></td>
+        <td><%= link_to 'Edit', edit_attribute_category_path(attribute_category) %></td>
+        <td><%= link_to 'Destroy', attribute_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Attribute Category', new_attribute_category_path %>
