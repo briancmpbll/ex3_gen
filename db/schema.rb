@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027054439) do
+ActiveRecord::Schema.define(version: 20151027070906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20151027054439) do
   add_index "attribute_categories", ["name"], name: "index_attribute_categories_on_name", unique: true, using: :btree
 
   create_table "caste_abilities", force: :cascade do |t|
-    t.integer "caste_id"
-    t.integer "ability_id"
+    t.integer "caste_id",   null: false
+    t.integer "ability_id", null: false
   end
 
   add_index "caste_abilities", ["ability_id"], name: "index_caste_abilities_on_ability_id", using: :btree
@@ -46,13 +46,13 @@ ActiveRecord::Schema.define(version: 20151027054439) do
     t.string   "anima_effect",      null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.integer  "character_type_id"
+    t.integer  "character_type_id", null: false
   end
 
   add_index "castes", ["name"], name: "index_castes_on_name", unique: true, using: :btree
 
   create_table "character_attributes", force: :cascade do |t|
-    t.integer  "attribute_category_id"
+    t.integer  "attribute_category_id", null: false
     t.string   "name",                  null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
