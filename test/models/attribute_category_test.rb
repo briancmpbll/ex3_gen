@@ -1,7 +1,8 @@
 require 'test_helper'
 
+# Unit tests for the AttributeCategory model
 class AttributeCategoryTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should have_many(:character_attributes).dependent(:destroy)
+  should validate_presence_of(:name)
+  should validate_uniqueness_of(:name)
 end
