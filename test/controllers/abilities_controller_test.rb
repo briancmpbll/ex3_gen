@@ -1,45 +1,46 @@
 require 'test_helper'
 
+# Unit tests for the abilities controller
 class AbilitiesControllerTest < ActionController::TestCase
   setup do
-    @ability = abilities(:one)
+    @ability = FactoryGirl.create(:ability)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get :index
     assert_response :success
     assert_not_nil assigns(:abilities)
   end
 
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should create ability" do
+  test 'should create ability' do
     assert_difference('Ability.count') do
-      post :create, ability: { name: @ability.name }
+      post :create, ability: FactoryGirl.attributes_for(:ability)
     end
 
     assert_redirected_to ability_path(assigns(:ability))
   end
 
-  test "should show ability" do
+  test 'should show ability' do
     get :show, id: @ability
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get :edit, id: @ability
     assert_response :success
   end
 
-  test "should update ability" do
+  test 'should update ability' do
     patch :update, id: @ability, ability: { name: @ability.name }
     assert_redirected_to ability_path(assigns(:ability))
   end
 
-  test "should destroy ability" do
+  test 'should destroy ability' do
     assert_difference('Ability.count', -1) do
       delete :destroy, id: @ability
     end

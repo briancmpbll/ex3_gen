@@ -6,6 +6,9 @@ AllCops:
     - Gemfile
   RunRailsCops: true
 
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
 Rails/HasAndBelongsToMany:
   Enabled: false
 
