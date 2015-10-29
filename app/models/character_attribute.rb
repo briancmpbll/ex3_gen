@@ -1,3 +1,4 @@
+# Model for attribute traits
 class CharacterAttribute < ActiveRecord::Base
   belongs_to :attribute_category
 

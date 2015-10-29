@@ -1,3 +1,4 @@
+# Controller for the Caste model
 class CastesController < ApplicationController
   before_action :set_character_type
   before_action :set_caste, only: [:show, :edit, :update, :destroy]
@@ -58,27 +59,31 @@ class CastesController < ApplicationController
   def destroy
     @caste.destroy
     respond_to do |format|
-      format.html { redirect_to character_type_castes_url, notice: 'Caste was successfully destroyed.' }
+      format.html do
+        redirect_to character_type_castes_url,
+                    notice: 'Caste was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_character_type
-      @character_type = CharacterType.find(params[:character_type_id])
-    end
 
-    def set_caste
-      @caste = @character_type.castes.includes(:abilities).find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_character_type
+    @character_type = CharacterType.find(params[:character_type_id])
+  end
 
-    def set_abilities
-      @abilities = @caste.abilities
-    end
+  def set_caste
+    @caste = @character_type.castes.includes(:abilities).find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def caste_params
-      params.require(:caste).permit(:name, :anima_effect, ability_ids: [])
-    end
+  def set_abilities
+    @abilities = @caste.abilities
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def caste_params
+    params.require(:caste).permit(:name, :anima_effect, ability_ids: [])
+  end
 end

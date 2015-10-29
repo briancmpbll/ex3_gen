@@ -1,3 +1,4 @@
+# Model for castes, aspects, or other mini splat
 class Caste < ActiveRecord::Base
   belongs_to :character_type
   has_and_belongs_to_many :abilities

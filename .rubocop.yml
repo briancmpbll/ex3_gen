@@ -1,0 +1,16 @@
+AllCops:
+  Excludes:
+    - db/schema.rb
+    - db/migrate/*
+    - bin/*
+    - Gemfile
+  RunRailsCops: true
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/LineLength:
+  Max: 100

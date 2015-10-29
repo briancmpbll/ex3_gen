@@ -1,3 +1,4 @@
+# Model for a character type or caste's anima effects
 class AnimaEffect < ActiveRecord::Base
   belongs_to :character_type
   belongs_to :caste

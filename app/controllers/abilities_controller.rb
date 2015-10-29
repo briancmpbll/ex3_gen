@@ -1,3 +1,4 @@
+# Controller for the Ability model
 class AbilitiesController < ApplicationController
   before_action :set_ability, only: [:show, :edit, :update, :destroy]
 
@@ -62,13 +63,14 @@ class AbilitiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ability
-      @ability = Ability.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def ability_params
-      params.require(:ability).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ability
+    @ability = Ability.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def ability_params
+    params.require(:ability).permit(:name)
+  end
 end
