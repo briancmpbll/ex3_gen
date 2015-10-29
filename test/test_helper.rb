@@ -9,4 +9,10 @@ FactoryGirl.find_definitions
 # Setup for all tests
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
+  def assert_responds_to(model, symbols)
+    symbols.each do |symbol|
+      assert model.respond_to?(symbol),
+             "#{model.class} does not respond to #{symbol}"
+    end
+  end
 end
