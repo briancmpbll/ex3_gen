@@ -1,6 +1,6 @@
 # Model for attribute categories ie. Physical, Social, Mental
 class AttributeCategory < ActiveRecord::Base
-  has_many :character_attributes, dependent: :destroy
+  include Nameable
 
-  validates :name, presence: true, uniqueness: true
+  has_many :character_attributes, dependent: :destroy
 end

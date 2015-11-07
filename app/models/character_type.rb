@@ -1,6 +1,6 @@
 # Model for a fatsplat ie, Solar Exalt, Dragonblood, etc
 class CharacterType < ActiveRecord::Base
-  has_many :castes, dependent: :destroy
+  include Nameable
 
-  validates :name, presence: true, uniqueness: true
+  has_many :castes, dependent: :destroy
 end

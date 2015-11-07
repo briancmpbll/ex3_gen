@@ -1,6 +1,6 @@
 # Model for the ability traits
 class Ability < ActiveRecord::Base
-  has_and_belongs_to_many :castes
+  include Nameable
 
-  validates :name, presence: true, uniqueness: true
+  has_and_belongs_to_many :castes
 end
