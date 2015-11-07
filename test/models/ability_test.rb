@@ -11,6 +11,11 @@ class AbilityTest < ActiveSupport::TestCase
   end
 
   test 'should respond to fields' do
-    assert_responds_to(@ability, [:name, :castes, :created_at, :updated_at])
+    assert_responds_to(@ability, [
+      :name,
+      :castes,
+      :created_at,
+      :updated_at
+    ])
   end
 end

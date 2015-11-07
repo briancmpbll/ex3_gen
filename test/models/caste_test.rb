@@ -12,4 +12,19 @@ class CasteTest < ActiveSupport::TestCase
     FactoryGirl.create(:caste)
     validate_uniqueness_of(:name)
   end
+
+  def setup
+    @caste = FactoryGirl.create(:caste)
+  end
+
+  test 'should respond to fields' do
+    assert_responds_to(@caste, [
+      :name,
+      :character_type_id,
+      :character_type,
+      :abilities,
+      :created_at,
+      :updated_at
+    ])
+  end
 end

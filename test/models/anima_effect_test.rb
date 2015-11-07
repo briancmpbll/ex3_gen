@@ -14,13 +14,15 @@ class AnimaEffectTest < ActiveSupport::TestCase
   end
 
   test 'should respond to fields' do
-    assert_responds_to(@anima_effect, [:character_type_id,
-                                       :caste_id,
-                                       :condition,
-                                       :effect,
-                                       :character_type,
-                                       :caste,
-                                       :created_at,
-                                       :updated_at])
+    assert_responds_to(@anima_effect, [
+      :character_type_id,
+      :caste_id,
+      :condition,
+      :effect,
+      :character_type,
+      :caste,
+      :created_at,
+      :updated_at
+    ])
   end
 end
