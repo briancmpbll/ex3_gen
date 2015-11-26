@@ -23,12 +23,4 @@ module AnimaEffectsHelper
       new_character_type_caste_anima_effect_path
     end
   end
-
-  def list_url(parent)
-    if parent.is_a?(CharacterType)
-      character_type_anima_effects_url
-    else
-      character_type_caste_anima_effects_url
-    end
-  end
 end
