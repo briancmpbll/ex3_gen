@@ -1,0 +1,23 @@
+<%= form_for([@parent, @anima_effect]) do |f| %>
+  <% if @anima_effect.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@anima_effect.errors.count, "error") %> prohibited this anima effect from being saved:</h2>
+
+      <ul>
+      <% @anima_effect.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :condition %><br>
+    <%= f.text_field :condition %><br>
+    <%= f.label :effect %><br>
+    <%= f.text_field :effect %><br>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

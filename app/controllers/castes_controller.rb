@@ -84,6 +84,6 @@ class CastesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def caste_params
-    params.require(:caste).permit(:name, :anima_effect, ability_ids: [])
+    params.require(:caste).permit(:name, ability_ids: [])
   end
 end

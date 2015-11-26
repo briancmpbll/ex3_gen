@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Condition:</strong>
+  <%= @anima_effect.condition %>
+</p>
+
+<p>
+  <strong>Effect:</strong>
+  <%= @anima_effect.effect %>
+</p>
+
+<%= link_to 'Edit', edit_path(@parent, @anima_effect) %> |
+<%= link_to 'Back', parent_path(@parent) %>

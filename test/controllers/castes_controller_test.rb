@@ -20,8 +20,9 @@ class CastesControllerTest < ActionController::TestCase
 
   test 'should create caste' do
     assert_difference('Caste.count') do
-      post :create, caste: FactoryGirl.attributes_for(:caste, character_type: @character_type),
-                    character_type_id: @character_type.id
+      post :create,
+           caste: FactoryGirl.attributes_for(:caste, character_type: @character_type),
+           character_type_id: @character_type.id
     end
 
     assert_redirected_to character_type_path(assigns(:character_type))

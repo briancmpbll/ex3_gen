@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   end
 
   resources :character_types do
-    resources :castes
+    resources :castes do
+      resources :anima_effects
+    end
+    resources :anima_effects
   end
 
   root 'character_types#index'
