@@ -1,13 +1,12 @@
 # Controller for the CharacterAttribute model.
 class CharacterAttributesController < ApplicationController
-  before_action :set_attribute_category
+  before_action :set_attribute_category, only: [:index, :new, :create]
   before_action :set_character_attribute, only: [:show, :edit, :update, :destroy]
 
   # GET /character_attributes
   # GET /character_attributes.json
   def index
-    @character_attributes = @attribute_category.character_attributes if @attribute_category
-    @character_attributes ||= CharacterAttribute.all
+    @character_attributes = @attribute_category.character_attributes
   end
 
   # GET /character_attributes/1
@@ -70,7 +69,7 @@ class CharacterAttributesController < ApplicationController
     @character_attribute.destroy
     respond_to do |format|
       format.html do
-        redirect_to [@attribute_category],
+        redirect_to [@character_attribute.attribute_category],
                     notice: 'Attribute was successfully destroyed.'
       end
       format.json { head :no_content }
@@ -81,13 +80,11 @@ class CharacterAttributesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_attribute_category
-    attribute_id = params[:attribute_category_id]
-    @attribute_category = AttributeCategory.find(attribute_id) if attribute_id
+    @attribute_category = AttributeCategory.find(params[:attribute_category_id])
   end
 
   def set_character_attribute
     @character_attribute = CharacterAttribute.find(params[:id])
-    @attribute_category ||= @character_attribute.attribute_category
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

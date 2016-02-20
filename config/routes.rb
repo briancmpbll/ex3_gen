@@ -2,10 +2,8 @@ Rails.application.routes.draw do
   resources :abilities
 
   resources :attribute_categories do
-    resources :character_attributes
+    resources :character_attributes, shallow: true
   end
-
-  resources :character_attributes, except: [:new, :create]
 
   resources :character_types do
     resources :castes do
