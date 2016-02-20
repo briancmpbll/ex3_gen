@@ -3,6 +3,7 @@ class CastesController < ApplicationController
   before_action :set_character_type, only: [:index, :new, :create]
   before_action :set_caste, only: [:show, :edit, :update, :destroy]
   before_action :set_abilities, only: :show
+  before_action :set_anima_effects, only: :show
 
   # GET /castes
   # GET /castes.json
@@ -80,6 +81,10 @@ class CastesController < ApplicationController
 
   def set_abilities
     @abilities = @caste.abilities
+  end
+
+  def set_anima_effects
+    @anima_effects = @caste.anima_effects
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

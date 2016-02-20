@@ -2,6 +2,7 @@
 class CharacterTypesController < ApplicationController
   before_action :set_character_type, only: [:show, :edit, :update, :destroy]
   before_action :set_castes, only: :show
+  before_action :set_anima_effects, only: :show
 
   # GET /character_types
   # GET /character_types.json
@@ -81,6 +82,10 @@ class CharacterTypesController < ApplicationController
 
   def set_castes
     @castes = @character_type.castes.all
+  end
+
+  def set_anima_effects
+    @anima_effects = @character_type.anima_effects.all
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
