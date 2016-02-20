@@ -1,15 +1,18 @@
 Rails.application.routes.draw do
   resources :abilities
 
-  resources :attribute_categories do
-    resources :character_attributes, shallow: true
+  concern :anima_effect_owner do
+    resources :anima_effects
   end
 
-  resources :character_types do
-    resources :castes do
-      resources :anima_effects
+  shallow do
+    resources :attribute_categories do
+      resources :character_attributes
     end
-    resources :anima_effects
+
+    resources :character_types, concerns: :anima_effect_owner do
+      resources :castes, concerns: :anima_effect_owner
+    end
   end
 
   root 'character_types#index'

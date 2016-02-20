@@ -15,7 +15,7 @@
         <td><%= anima_effect.condition %></td>
         <td><%= anima_effect.effect %></td>
         <td><%= link_to 'Show', [@parent, anima_effect] %></td>
-        <td><%= link_to 'Edit', edit_path(@parent, anima_effect) %></td>
+        <td><%= link_to 'Edit', edit_anima_effect_path(anima_effect) %></td>
         <td><%= link_to 'Destroy', [@parent, anima_effect], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

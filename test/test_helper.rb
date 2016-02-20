@@ -16,3 +16,5 @@ class ActiveSupport::TestCase
     end
   end
 end
+
+Dir[Rails.root.join('test/modules/**.*')].each { |f| require f }

@@ -12,9 +12,9 @@
     <% @castes.each do |caste| %>
       <tr>
         <td><%= caste.name %></td>
-        <td><%= link_to 'Show', [@character_type, caste] %></td>
-        <td><%= link_to 'Edit', edit_character_type_caste_path(@character_type, caste) %></td>
-        <td><%= link_to 'Destroy', [@character_type, caste], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', caste %></td>
+        <td><%= link_to 'Edit', edit_caste_path(caste) %></td>
+        <td><%= link_to 'Destroy', caste, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

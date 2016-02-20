@@ -1,6 +1,6 @@
 # Controller for the Caste model
 class CastesController < ApplicationController
-  before_action :set_character_type
+  before_action :set_character_type, only: [:index, :new, :create]
   before_action :set_caste, only: [:show, :edit, :update, :destroy]
   before_action :set_abilities, only: :show
 
@@ -45,7 +45,7 @@ class CastesController < ApplicationController
   def update
     respond_to do |format|
       if @caste.update(caste_params)
-        format.html { redirect_to [@character_type], notice: 'Caste was successfully updated.' }
+        format.html { redirect_to [@caste], notice: 'Caste was successfully updated.' }
         format.json { render :show, status: :ok, location: @caste }
       else
         format.html { render :edit }
@@ -60,7 +60,7 @@ class CastesController < ApplicationController
     @caste.destroy
     respond_to do |format|
       format.html do
-        redirect_to character_type_castes_url,
+        redirect_to [@caste.character_type],
                     notice: 'Caste was successfully destroyed.'
       end
       format.json { head :no_content }
@@ -75,7 +75,7 @@ class CastesController < ApplicationController
   end
 
   def set_caste
-    @caste = @character_type.castes.includes(:abilities).find(params[:id])
+    @caste = Caste.includes(:abilities).find(params[:id])
   end
 
   def set_abilities

@@ -7,18 +7,37 @@ class CastesControllerTest < ActionController::TestCase
     @caste = FactoryGirl.create(:caste, character_type: @character_type)
   end
 
-  test 'should get index' do
+  test 'shoud not get index without parent' do
+    assert_raise ActionController::UrlGenerationError do
+      get :index
+    end
+  end
+
+  test 'should get index with parent' do
     get :index, character_type_id: @character_type.id
     assert_response :success
     assert_not_nil assigns(:castes)
   end
 
-  test 'should get new' do
+  test 'should not get new without parent' do
+    assert_raise ActionController::UrlGenerationError do
+      get :new
+    end
+  end
+
+  test 'should get new with parent' do
     get :new, character_type_id: @character_type.id
     assert_response :success
   end
 
-  test 'should create caste' do
+  test 'should not create caste without parent' do
+    assert_raise ActionController::UrlGenerationError do
+      post :create, caste:
+      FactoryGirl.attributes_for(:caste, character_type: @character_type)
+    end
+  end
+
+  test 'should create caste with parent' do
     assert_difference('Caste.count') do
       post :create,
            caste: FactoryGirl.attributes_for(:caste, character_type: @character_type),
@@ -29,25 +48,25 @@ class CastesControllerTest < ActionController::TestCase
   end
 
   test 'should show caste' do
-    get :show, id: @caste, character_type_id: @character_type.id
+    get :show, id: @caste
     assert_response :success
   end
 
   test 'should get edit' do
-    get :edit, id: @caste, character_type_id: @character_type.id
+    get :edit, id: @caste
     assert_response :success
   end
 
   test 'should update caste' do
-    patch :update, id: @caste, caste: { name: @caste.name }, character_type_id: @character_type.id
-    assert_redirected_to character_type_path(assigns(:character_type))
+    patch :update, id: @caste, caste: { name: @caste.name }
+    assert_redirected_to caste_path(assigns(:caste))
   end
 
   test 'should destroy caste' do
     assert_difference('Caste.count', -1) do
-      delete :destroy, id: @caste, character_type_id: @character_type.id
+      delete :destroy, id: @caste
     end
 
-    assert_redirected_to character_type_castes_path(assigns(:character_type))
+    assert_redirected_to character_type_path(@character_type)
   end
 end
