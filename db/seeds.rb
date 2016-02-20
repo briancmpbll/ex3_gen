@@ -123,5 +123,99 @@ AnimaEffect.create([
             attack. When the Zenith’s anima is at bonfire, reduce the cost of this power by five
             motes and ignore the Willpower. This power may only be used once per day, resetting
             when the sun is at its zenith.'
+  },
+  { character_type: solar,
+    caste: zenith,
+    condition: 'Spend 7 motes of Essence',
+    effect: 'The Zenith may order a dematerialized spirit to manifest using a (Charisma + Presence)
+            persuade action with (Essence) automatic successes. All spirits inherently recognize the
+            Unconquered Sun’s authority in the priest-kings and are compelled as if by a Defining
+            Intimacy, but may still have Defining Ties or Principles which counter this advantage.
+            If successful, the Zenith’s very command draws the spirit into the material world, so
+            that it does not need to pay the cost to materialize.'
+  },
+  { character_type: solar,
+    caste: twilight,
+    condition: 'Spend 5 motes of Essence',
+    effect: 'The Twilight projects an aura of pure force, reflexively gaining five Hardness for one
+            turn. At the bonfire/iconic level, this power activates itself automatically at no cost.
+            This effect doesn’t stack with other magic that raises Hardness, but it can be used
+            during Initiative Crash.'
+  },
+  { character_type: solar,
+    caste: twilight,
+    condition: 'Spend 10 motes of Essence and 1 Willpower',
+    effect: 'The Twilight’s anima flares blue and white and consumes her body over the course of the
+            round. On her next turn, she vanishes into her anima and ceases to exist. If the Exalt
+            moves or suffers knockdown before the action is completed, it fails and the effect is
+            wasted. After using this power, the Twilight will not reappear until the following
+            sunset. When she does, it will be at a place of power within 10 miles of her vanishing
+            point, chosen by the Storyteller. She might appear at a temple, a demesne, a major
+            crossroads, the door of a god’s sanctum, the precise center of a city, etc.'
+  },
+  { character_type: solar,
+    caste: twilight,
+    condition: 'Spend 10 motes',
+    effect: 'The Twilight may touch an Essence 1-3 elemental or a demon of the first circle,
+            conjoining its Essence to her anima. Roll Intelligence + Occult against the creature’s
+            Resolve. If successful, this creates a pact that changes the spirit into her familiar,
+            allowing her to target it with applicable Survival Charms. In addition, the Twilight can
+            reflexively summon the spirit instantly for three motes, drawing it through the Essence
+            of the world to appear beside her. She may banish the creature again, reflexively, for
+            free, returning it to the tides of Essence that suffuse Creation until needed. The
+            Twilight may have up to (Essence) spirit familiars bound in this fashion at once.'
+  },
+  { character_type: solar,
+    caste: night,
+    condition: 'Spend 2 motes',
+    effect: 'The Night can dampen her anima, treating all Peripheral Essence expenditures as if they
+            were Personal for one instant.'
+  },
+  { character_type: solar,
+    caste: night,
+    condition: 'Spend 3 motes',
+    effect: 'The Night can ignore up to (higher of 3 or Essence) penalties to a Stealth attempt for
+            one instant. These motes are always considered Personal, regardless of the pool they’re
+            spent from.'
+  },
+  { character_type: solar,
+    caste: night,
+    condition: 'Bonfire/iconic anima display',
+    effect: 'The Night\'s anima wraps around and suffuses her form, hiding her figure and masking
+            her visage in flame. She is merely a fearsome silhouette shrouded in all the hues of
+            evening. It becomes impossible to discern her identity. This is considered a perfect
+            effect, and cannot be pierced by Eye of the Unconquered Sun (see p. 273) or other
+            all-seeing magic.'
+  },
+  { character_type: solar,
+    caste: eclipse,
+    condition: 'Spend 10 motes and 1 Willpower',
+    effect: 'The Eclipse sanctifies an oath she has witnessed. The Exalt touches the oathgivers (or
+            their words, as they pass through the air), her caste mark flashing imperceptibly. If
+            she wishes, her anima briefly flares, swirling with the words and runes by which Heaven
+            has given her the right to arbitrate such matters. Oath-givers who break pacts
+            sanctified by the Eclipse (including the Exalt herself ) are subject to a terrible
+            curse. The details of the curse are devised by the Storyteller, ideally reflecting the
+            oath broken. A woman who breaks a hospitality oath might find herself incapable of rest
+            beneath any roof for a year and a day, while a man who murdered the one he swore to
+            protect may find his defenses utterly failing him when he must next fight for his life.'
+  },
+  { character_type: solar,
+    caste: eclipse,
+    condition: 'Passive',
+    effect: 'The Eclipse has diplomatic immunity when treating with the enemies of Creation. So long
+            as the Eclipse approaches them on legitimate business of some kind, shades, spirits, the
+            demon princes of Hell, and the Fair Folk may not attack the Eclipse or her companions
+            without just cause, and such creatures must observe the local rules of hospitality. Such
+            beings may still attempt to provoke members of the Solar’s embassy into breaking the
+            peace, thus voiding this effect’s protection.'
+  },
+  { character_type: solar,
+    caste: eclipse,
+    condition: 'Passive',
+    effect: 'The Eclipse represents all the subtle movements of Essence under Heaven, the strange
+            and self-referencing powers that stir when night merges with day. Eclipses can learn the
+            Charms of spirits, Fair Folk and similar supernatural beings which have the Eclipse
+            keyword for eight experience points each.'
   }
 ])
