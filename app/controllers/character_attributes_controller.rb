@@ -6,7 +6,8 @@ class CharacterAttributesController < ApplicationController
   # GET /character_attributes
   # GET /character_attributes.json
   def index
-    @character_attributes = @attribute_category.character_attributes
+    @character_attributes = @attribute_category.character_attributes if @attribute_category
+    @character_attributes ||= CharacterAttribute.all
   end
 
   # GET /character_attributes/1
@@ -52,7 +53,7 @@ class CharacterAttributesController < ApplicationController
     respond_to do |format|
       if @character_attribute.update(character_attribute_params)
         format.html do
-          redirect_to [@attribute_category],
+          redirect_to [@character_attribute],
                       notice: 'Attribute was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @character_attribute }
@@ -69,7 +70,7 @@ class CharacterAttributesController < ApplicationController
     @character_attribute.destroy
     respond_to do |format|
       format.html do
-        redirect_to attribute_category_character_attributes_url,
+        redirect_to [@attribute_category],
                     notice: 'Attribute was successfully destroyed.'
       end
       format.json { head :no_content }
@@ -80,11 +81,13 @@ class CharacterAttributesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_attribute_category
-    @attribute_category = AttributeCategory.find(params[:attribute_category_id])
+    attribute_id = params[:attribute_category_id]
+    @attribute_category = AttributeCategory.find(attribute_id) if attribute_id
   end
 
   def set_character_attribute
-    @character_attribute = @attribute_category.character_attributes.find(params[:id])
+    @character_attribute = CharacterAttribute.find(params[:id])
+    @attribute_category ||= @character_attribute.attribute_category
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

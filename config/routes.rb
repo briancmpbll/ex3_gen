@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :character_attributes
   end
 
+  resources :character_attributes, except: [:new, :create]
+
   resources :character_types do
     resources :castes do
       resources :anima_effects

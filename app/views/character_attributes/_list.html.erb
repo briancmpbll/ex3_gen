@@ -12,9 +12,9 @@
     <% @character_attributes.each do |character_attribute| %>
       <tr>
         <td><%= character_attribute.name %></td>
-        <td><%= link_to 'Show', [@attribute_category, character_attribute] %></td>
-        <td><%= link_to 'Edit', edit_attribute_category_character_attribute_path(@attribute_category, character_attribute) %></td>
-        <td><%= link_to 'Destroy', [@attribute_category, character_attribute], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', character_attribute %></td>
+        <td><%= link_to 'Edit', edit_character_attribute_path(character_attribute) %></td>
+        <td><%= link_to 'Destroy', character_attribute, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
