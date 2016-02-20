@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20151027082507) do
   add_index "abilities_castes", ["caste_id"], name: "index_abilities_castes_on_caste_id", using: :btree
 
   create_table "anima_effects", force: :cascade do |t|
-    t.integer  "character_type_id", null: false
+    t.integer  "character_type_id"
     t.integer  "caste_id"
     t.string   "condition",         null: false
     t.string   "effect",            null: false

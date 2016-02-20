@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', [@parent, @anima_effect] %> |
-<%= link_to 'Back', parent_path(@parent) %>
+<%= link_to 'Show', @anima_effect %> |
+<%= link_to 'Back', parent_path(@anima_effect.parent) %>

@@ -1,6 +1,6 @@
 # Controller for the AnimaEffect model
 class AnimaEffectsController < ApplicationController
-  before_action :set_parent
+  before_action :set_parent, only: [:index, :new, :create]
   before_action :set_anima_effect, only: [:show, :edit, :update, :destroy]
 
   # GET /anima_effects
@@ -44,7 +44,10 @@ class AnimaEffectsController < ApplicationController
   def update
     respond_to do |format|
       if @anima_effect.update(anima_effect_params)
-        format.html { redirect_to [@parent], notice: 'Anima Effect was successfully updated.' }
+        format.html do
+          redirect_to [@anima_effect],
+                      notice: 'Anima Effect was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @anima_effect }
       else
         format.html { render :edit }
@@ -59,7 +62,7 @@ class AnimaEffectsController < ApplicationController
     @anima_effect.destroy
     respond_to do |format|
       format.html do
-        redirect_to list_url,
+        redirect_to @anima_effect.parent,
                     notice: 'Anima Effect was successfully destroyed.'
       end
       format.json { head :no_content }
@@ -84,13 +87,5 @@ class AnimaEffectsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def anima_effect_params
     params.require(:anima_effect).permit(:condition, :effect)
-  end
-
-  def list_url
-    if @parent.is_a?(CharacterType)
-      character_type_anima_effects_url
-    else
-      character_type_caste_anima_effects_url
-    end
   end
 end

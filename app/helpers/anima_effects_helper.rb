@@ -12,7 +12,7 @@ module AnimaEffectsHelper
     if parent.is_a?(CharacterType)
       new_character_type_anima_effect_path
     else
-      new_character_type_caste_anima_effect_path
+      new_caste_anima_effect_path
     end
   end
 end
