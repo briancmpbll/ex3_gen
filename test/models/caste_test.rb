@@ -2,7 +2,7 @@ require 'test_helper'
 
 # Unit tests for the Caste model
 class CasteTest < ActiveSupport::TestCase
-  should belong_to(:character_type).dependent(:destroy)
+  should belong_to(:character_type)
   should have_many(:anima_effects).dependent(:destroy)
   should have_and_belong_to_many(:abilities)
 

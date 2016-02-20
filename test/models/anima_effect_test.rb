@@ -6,8 +6,8 @@ class AnimaEffectTest < ActiveSupport::TestCase
   should validate_presence_of(:condition)
   should validate_presence_of(:effect)
 
-  should belong_to(:character_type).dependent(:destroy)
-  should belong_to(:caste).dependent(:destroy)
+  should belong_to(:character_type)
+  should belong_to(:caste)
 
   def setup
     @anima_effect = FactoryGirl.create(:anima_effect)
