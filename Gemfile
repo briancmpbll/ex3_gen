@@ -47,7 +47,6 @@ end
 
 group :test do
   gem 'shoulda'
-  gem 'shoulda-context'
   gem 'mocha'
   gem 'capybara'
 end

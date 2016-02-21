@@ -2,49 +2,96 @@ require 'test_helper'
 
 # Unit tests for the abilities controller
 class AbilitiesControllerTest < ActionController::TestCase
-  setup do
-    @ability = FactoryGirl.create(:ability)
-  end
-
-  test 'should get index' do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:abilities)
-  end
-
-  test 'should get new' do
-    get :new
-    assert_response :success
-  end
-
-  test 'should create ability' do
-    assert_difference('Ability.count') do
-      post :create, ability: FactoryGirl.attributes_for(:ability)
+  context 'getting ability index' do
+    setup do
+      get :index
     end
 
-    assert_redirected_to ability_path(assigns(:ability))
+    should respond_with :success
+    should render_template('index')
+    should render_template(partial: '_list')
+    should_not set_flash
   end
 
-  test 'should show ability' do
-    get :show, id: @ability
-    assert_response :success
+  context 'getting new ability' do
+    setup do
+      get :new
+    end
+
+    should respond_with :success
+    should render_template('new')
+    should render_template(partial: '_form')
+    should_not set_flash
   end
 
-  test 'should get edit' do
-    get :edit, id: @ability
-    assert_response :success
+  context 'showing ability' do
+    setup do
+      @ability = FactoryGirl.create(:ability)
+      get :show, id: @ability
+    end
+
+    should respond_with :success
+    should render_template('show')
+    should_not set_flash
   end
 
-  test 'should update ability' do
-    patch :update, id: @ability, ability: { name: @ability.name }
-    assert_redirected_to ability_path(assigns(:ability))
+  context 'creating ability' do
+    setup do
+      @pre_count = Ability.count
+      @attr = FactoryGirl.attributes_for(:ability)
+      post :create, ability: @attr
+    end
+
+    should respond_with :redirect
+    should redirect_to('the URL for the new ability') { ability_path(assigns :ability) }
+    should set_flash
+
+    should 'create one ability' do
+      assert_equal(Ability.count - @pre_count, 1)
+    end
   end
 
-  test 'should destroy ability' do
-    assert_difference('Ability.count', -1) do
+  context 'getting edit ability' do
+    setup do
+      @ability = FactoryGirl.create(:ability)
+      get :edit, id: @ability
+    end
+
+    should respond_with :success
+    should render_template('edit')
+    should render_template(partial: '_form')
+    should_not set_flash
+  end
+
+  context 'updating ability' do
+    setup do
+      @ability = FactoryGirl.create(:ability)
+      @pre_count = Ability.count
+      patch :update, id: @ability, ability: { name: @ability.name }
+    end
+
+    should respond_with :redirect
+    should redirect_to('the URL for the edited ability') { ability_path(assigns :ability) }
+    should set_flash
+
+    should 'not change the ability count' do
+      assert_equal(Ability.count, @pre_count)
+    end
+  end
+
+  context 'deleting ability' do
+    setup do
+      @ability = FactoryGirl.create(:ability)
+      @pre_count = Ability.count
       delete :destroy, id: @ability
     end
 
-    assert_redirected_to abilities_path
+    should respond_with :redirect
+    should redirect_to('the URL for abilities index') { abilities_path }
+    should set_flash
+
+    should 'delete one ability' do
+      assert_equal(Ability.count - @pre_count, -1)
+    end
   end
 end
