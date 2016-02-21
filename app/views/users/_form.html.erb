@@ -16,13 +16,15 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :encrypted_password %><br>
-    <%= f.text_field :encrypted_password %>
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
   </div>
-  <div class="field">
-    <%= f.label :salt %><br>
-    <%= f.text_field :salt %>
-  </div>
+  <% if params[:action] == "new" %>
+    <div class="field">
+      <%= f.label :password_confirmation %><br>
+      <%= f.password_field :password_confirmation %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>

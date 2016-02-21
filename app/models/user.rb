@@ -1,7 +1,6 @@
 # Model for a user
 class User < ActiveRecord::Base
-  validates_presence_of [:email, :encrypted_password, :salt]
-  validates_uniqueness_of :email
+  has_secure_password
 
-  validates_format_of :email, with: /.+@.+\..+/
+  validates :email, presence: true, uniqueness: true, format: /.+@.+\..+/
 end
