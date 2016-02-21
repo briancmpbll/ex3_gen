@@ -10,6 +10,8 @@ class UserTest < ActiveSupport::TestCase
     should have_secure_password
 
     should respond_to :email
+    should respond_to :password
+    should respond_to :password_confirmation
     should respond_to :password_digest
 
     should validate_presence_of :email
