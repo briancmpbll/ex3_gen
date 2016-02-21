@@ -2,36 +2,51 @@ require 'test_helper'
 
 # Unit tests for the AnimaEffect model
 class AnimaEffectTest < ActiveSupport::TestCase
-  should validate_presence_of(:condition)
-  should validate_presence_of(:effect)
+  context 'an anima effect' do
+    should respond_to(:character_type_id)
+    should respond_to(:caste_id)
+    should respond_to(:condition)
+    should respond_to(:effect)
+    should respond_to(:character_type)
+    should respond_to(:caste)
+    should respond_to(:created_at)
+    should respond_to(:updated_at)
+    should respond_to(:parent)
 
-  should belong_to(:character_type)
-  should belong_to(:caste)
+    should validate_presence_of(:condition)
+    should validate_presence_of(:effect)
 
-  def setup
-    @anima_effect = FactoryGirl.create(:anima_effect)
-  end
+    should belong_to(:character_type)
+    should belong_to(:caste)
 
-  test 'should respond to fields' do
-    assert_responds_to(@anima_effect, [
-      :character_type_id,
-      :caste_id,
-      :condition,
-      :effect,
-      :character_type,
-      :caste,
-      :created_at,
-      :updated_at,
-      :parent
-    ])
-  end
+    context 'with a character type' do
+      setup do
+        @type_effect = FactoryGirl.create(:type_anima_effect)
+      end
 
-  test 'should return character type as parent if caste is not defined' do
-    assert_equal(@anima_effect.character_type, @anima_effect.parent)
-  end
+      should 'be invalid after adding a caste' do
+        @type_effect.caste = FactoryGirl.create(:caste)
+        assert(!@type_effect.valid?)
+      end
 
-  test 'should return caste as parent if caste is defined' do
-    @caste_anima_effect = FactoryGirl.create(:caste_anima_effect)
-    assert_equal(@caste_anima_effect.caste, @caste_anima_effect.parent)
+      should 'return character type as parent' do
+        assert_equal(@type_effect.character_type, @type_effect.parent)
+      end
+    end
+
+    context 'with a caste' do
+      setup do
+        @caste_effect = FactoryGirl.create(:caste_anima_effect)
+      end
+
+      should 'be invalid after adding a character type' do
+        @caste_effect.character_type = FactoryGirl.create(:character_type)
+        assert(!@caste_effect.valid?)
+      end
+
+      should 'return caste as parent' do
+        assert_equal(@caste_effect.caste, @caste_effect.parent)
+      end
+    end
   end
 end

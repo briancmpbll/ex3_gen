@@ -3,13 +3,20 @@ class AnimaEffect < ActiveRecord::Base
   belongs_to :character_type
   belongs_to :caste
 
-  validates :character_type, presence: !:caste.present?
-  validates :caste, presence: !:character_type.present?
+  validate :validate_parent
+
   validates :condition, presence: true
   validates :effect, presence: true
 
   def parent
     return caste if caste
     character_type
+  end
+
+  private
+
+  def validate_parent
+    return if caste.nil? ^ character_type.nil?
+    errors.add(:base, 'Specify a character type or caste, not both')
   end
 end

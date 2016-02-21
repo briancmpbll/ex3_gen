@@ -2,22 +2,20 @@ require 'test_helper'
 
 # Unit tests for the CharacterType model
 class CharacterTypeTest < ActiveSupport::TestCase
-  should have_many(:castes).dependent(:destroy)
-  should have_many(:anima_effects).dependent(:destroy)
+  context 'a character type' do
+    setup do
+      @character_type = FactoryGirl.create(:character_type)
+    end
 
-  should validate_presence_of(:name)
-  should validate_uniqueness_of(:name)
+    should respond_to(:name)
+    should respond_to(:castes)
+    should respond_to(:created_at)
+    should respond_to(:updated_at)
 
-  def setup
-    @character_type = FactoryGirl.create(:character_type)
-  end
+    should have_many(:castes).dependent(:destroy)
+    should have_many(:anima_effects).dependent(:destroy)
 
-  test 'should respond to fields' do
-    assert_responds_to(@character_type, [
-      :name,
-      :castes,
-      :created_at,
-      :updated_at
-    ])
+    should validate_presence_of(:name)
+    should validate_uniqueness_of(:name)
   end
 end
