@@ -81,9 +81,9 @@ ActiveRecord::Schema.define(version: 20160221221740) do
   add_index "character_types", ["name"], name: "index_character_types_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email"
-    t.string   "encrypted_password"
-    t.string   "salt"
+    t.string   "email",              null: false
+    t.string   "encrypted_password", null: false
+    t.string   "salt",               null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end

@@ -6,5 +6,5 @@ class Caste < ActiveRecord::Base
   belongs_to :character_type
   has_and_belongs_to_many :abilities
 
-  validates :character_type, presence: true
+  validates_presence_of :character_type
 end

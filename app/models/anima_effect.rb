@@ -5,8 +5,7 @@ class AnimaEffect < ActiveRecord::Base
 
   validate :validate_parent
 
-  validates :condition, presence: true
-  validates :effect, presence: true
+  validates_presence_of [:condition, :effect]
 
   def parent
     return caste if caste

@@ -4,5 +4,5 @@ class CharacterAttribute < ActiveRecord::Base
 
   belongs_to :attribute_category
 
-  validates :attribute_category, presence: true
+  validates_presence_of :attribute_category
 end
