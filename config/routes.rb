@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   resources :abilities
 
   concern :anima_effect_owner do
