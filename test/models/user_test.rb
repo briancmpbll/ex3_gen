@@ -22,5 +22,12 @@ class UserTest < ActiveSupport::TestCase
     should allow_value('email+email@email.com').for(:email)
     should_not allow_value('email@email').for(:email)
     should_not allow_value('not an email').for(:email)
+
+    should 'convert email to lower case before saving' do
+      email = 'EmAil@EmAiL.Com'
+      new_user = FactoryGirl.build(:user, email: email)
+      new_user.save
+      assert_equal(new_user.email, email.downcase)
+    end
   end
 end
