@@ -13,13 +13,13 @@
 
   <div class="field">
     <%= f.label :email %><br>
-    <%= f.text_field :email %>
+    <%= f.email_field :email %>
   </div>
   <div class="field">
     <%= f.label :password %><br>
     <%= f.password_field :password %>
   </div>
-  <% if params[:action] == "new" %>
+  <% if ['create', 'new'].include? params[:action] %>
     <div class="field">
       <%= f.label :password_confirmation %><br>
       <%= f.password_field :password_confirmation %>
