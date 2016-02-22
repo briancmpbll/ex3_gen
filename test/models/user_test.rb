@@ -15,12 +15,18 @@ class UserTest < ActiveSupport::TestCase
     should respond_to :password_digest
 
     should validate_presence_of :email
+    should validate_presence_of :password
 
     should validate_uniqueness_of(:email).case_insensitive
 
+    should validate_length_of(:email).is_at_most(50)
+    should validate_length_of(:password).is_at_least(6)
+
     should allow_value('email@email.com').for(:email)
     should allow_value('email+email@email.com').for(:email)
+    should_not allow_value('email@email,com').for(:email)
     should_not allow_value('email@email').for(:email)
+    should_not allow_value('email_at_email.com').for(:email)
     should_not allow_value('not an email').for(:email)
 
     should 'convert email to lower case before saving' do
