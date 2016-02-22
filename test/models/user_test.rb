@@ -16,7 +16,7 @@ class UserTest < ActiveSupport::TestCase
 
     should validate_presence_of :email
 
-    should validate_uniqueness_of :email
+    should validate_uniqueness_of(:email).case_insensitive
 
     should allow_value('email@email.com').for(:email)
     should allow_value('email+email@email.com').for(:email)
