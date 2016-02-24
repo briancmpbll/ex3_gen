@@ -4,13 +4,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: session_params[:email].downcase)
+    user = User.find_by(email: session_params[:email])
 
-    respond_to do |format|
-      if user && user.authenticate(session_params[:password])
-      else
-        format.html { render :new, danger: 'Invalid email/password combination' }
-      end
+    if user && user.authenticate(session_params[:password])
+      log_in user
+      redirect_to user, notice: 'Welcome back!'
+    else
+      flash.now[:danger] = 'Invalid email/password combination'
+      render :new
     end
   end
 
@@ -20,6 +21,8 @@ class SessionsController < ApplicationController
   private
 
   def session_params
-    params.require(:session).permit(:email, :password)
+    permitted = params.require(:session).permit(:email, :password)
+    permitted[:email].downcase
+    permitted
   end
 end
