@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  root 'character_types#index'
+  get 'signup',    to: 'users#new'
+  get 'login',     to: 'sessions#new'
+  post 'login',    to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+
   resources :users
   resources :abilities
 
@@ -15,9 +21,6 @@ Rails.application.routes.draw do
       resources :castes, concerns: :anima_effect_owner
     end
   end
-
-  root 'character_types#index'
-  get 'signup' => 'users#new'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

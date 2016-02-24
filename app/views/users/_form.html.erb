@@ -19,13 +19,11 @@
     <%= f.label :password %><br>
     <%= f.password_field :password %>
   </div>
-  <% if ['create', 'new'].include? params[:action] %>
-    <div class="field">
-      <%= f.label :password_confirmation %><br>
-      <%= f.password_field :password_confirmation %>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation %>
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Sign Up' %>
   </div>
 <% end %>
