@@ -34,6 +34,10 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       should 'render the show template' do
         assert_template 'users/show'
       end
+
+      should 'set the flash' do
+        assert_equal 'User was successfully created.', flash[:notice]
+      end
     end
   end
 end
