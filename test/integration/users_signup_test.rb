@@ -20,6 +20,10 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       should 'render the new user template' do
         assert_template 'users/new'
       end
+
+      should 'display errors' do
+        assert_select 'div#error_explanation'
+      end
     end
 
     context 'with a valid user' do
@@ -37,6 +41,10 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
 
       should 'set the flash' do
         assert_equal 'User was successfully created.', flash[:notice]
+      end
+
+      should 'not display errors' do
+        assert_select 'div#error_explanation', false
       end
     end
   end
