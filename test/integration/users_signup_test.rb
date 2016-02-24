@@ -2,50 +2,28 @@ require 'test_helper'
 
 # Integration test for signing up a new user.
 class UsersSignupTest < ActionDispatch::IntegrationTest
-  context 'submitting the signup form' do
-    setup do
-      get signup_path
-      @user_count = User.count
+  setup do
+    @user = FactoryGirl.build(:user)
+  end
+
+  test 'signing up with invalid information' do
+    visit signup_path
+    assert_no_difference('User.count') do
+      click_button 'Sign up'
     end
+    assert_current_path users_path
+    assert_selector 'div#error_explanation'
+  end
 
-    context 'with a blank user' do
-      setup do
-        post users_path, user: FactoryGirl.attributes_for(:blank_user)
-      end
-
-      should 'not create a user' do
-        assert_equal(@user_count, User.count)
-      end
-
-      should 'render the new user template' do
-        assert_template 'users/new'
-      end
-
-      should 'display errors' do
-        assert_select 'div#error_explanation'
-      end
+  test 'signing up with valid information' do
+    visit signup_path
+    assert_difference('User.count', 1) do
+      fill_in 'Email', with: @user.email
+      fill_in 'Password', with: @user.password
+      fill_in 'Password confirmation', with: @user.password_confirmation
+      click_button 'Sign up'
     end
-
-    context 'with a valid user' do
-      setup do
-        post_via_redirect users_path, user: FactoryGirl.attributes_for(:user)
-      end
-
-      should 'create a user' do
-        assert_equal(User.count - @user_count, 1)
-      end
-
-      should 'render the show template' do
-        assert_template 'users/show'
-      end
-
-      should 'set the flash' do
-        assert_equal 'User was successfully created.', flash[:notice]
-      end
-
-      should 'not display errors' do
-        assert_select 'div#error_explanation', false
-      end
-    end
+    assert_current_path user_path(User.order('created_at').last)
+    assert_no_selector 'div#error_explanation'
   end
 end

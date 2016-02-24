@@ -2,53 +2,30 @@ require 'test_helper'
 
 # Integration test for signing in a user.
 class UsersLoginTest < ActionDispatch::IntegrationTest
-  context 'the login page' do
-    setup do
-      get login_path
-    end
+  setup do
+    @user = FactoryGirl.create(:user)
+  end
 
-    should 'render the new template' do
-      assert_template 'sessions/new'
-    end
+  test 'login with invalid information' do
+    visit login_path
+    click_button 'Log in'
+    assert_current_path login_path
+    assert_selector 'div.alert-danger'
+    assert_text 'Invalid email/password combination'
+    visit root_path
+    assert_no_selector 'div.alert'
+  end
 
-    context 'submitted with an invalid user' do
-      setup do
-        post login_path, session: { email: '', password: '' }
-      end
-
-      should 'render the new template' do
-        assert_template 'sessions/new'
-      end
-
-      should 'set the flash' do
-        assert_equal 'Invalid email/password combination', flash[:danger]
-      end
-
-      should 'not have the flash set after navigating away' do
-        get root_path
-        assert flash.empty?
-      end
-    end
-
-    context 'submitted with a valid user' do
-      setup do
-        @user = FactoryGirl.create(:user)
-        post_via_redirect login_path, session: { email: @user.email,
-                                                 password: @user.password }
-      end
-
-      should 'render the users/show template' do
-        assert_template 'users/show'
-      end
-
-      should 'set the flash' do
-        assert_equal 'Welcome back!', flash[:notice]
-      end
-
-      should 'not have the flash set after navigating away' do
-        get root_path
-        assert flash.empty?
-      end
-    end
+  test 'login with a valid user' do
+    visit login_path
+    fill_in 'Email', with: @user.email
+    fill_in 'Password', with: @user.password
+    click_button 'Log in'
+    assert_current_path user_path(@user)
+    assert_no_selector 'div.alert-danger'
+    assert_selector 'div.alert-notice'
+    assert_text 'Welcome back!'
+    visit root_path
+    assert_no_selector 'div.alert'
   end
 end
