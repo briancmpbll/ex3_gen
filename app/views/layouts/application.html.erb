@@ -16,11 +16,11 @@
       <ul>
         <li><%= link_to "Profile", current_user %></li>
         <li><%= link_to "Settings", '#' %></li>
-        <li><%= link_to "Log Out", logout_path, method: "delete" %></li>
+        <li><%= link_to "Log out", logout_path, method: "delete" %></li>
       </ul>
     </li>
   <% else %>
-    <li><%= link_to "Log In", login_path %></li>
+    <li><%= link_to "Log in", login_path %></li>
   <% end %>
 </ul>
 

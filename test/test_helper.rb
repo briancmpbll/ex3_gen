@@ -12,10 +12,15 @@ Dir[Rails.root.join('test/matchers/**.*')].each { |f| require f }
 
 # Setup for all tests
 class ActiveSupport::TestCase
-  # Add more helper methods to be used by all tests here...
 end
 
 # Setup capybara for integration tests
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
+
+  def logged_in_menu?
+    (has_no_link? 'Log in') &&
+      (has_link? 'Log out') &&
+      (has_link? 'Profile')
+  end
 end

@@ -8,24 +8,28 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
 
   test 'login with invalid information' do
     visit login_path
+    assert has_link? 'Log in', href: login_path
     click_button 'Log in'
     assert_current_path login_path
     assert_selector 'div.alert-danger'
     assert_text 'Invalid email/password combination'
+    assert_not logged_in_menu?
     visit root_path
     assert_no_selector 'div.alert'
   end
 
-  test 'login with a valid user' do
+  test 'login with a valid user followed by logout' do
     visit login_path
     fill_in 'Email', with: @user.email
     fill_in 'Password', with: @user.password
     click_button 'Log in'
     assert_current_path user_path(@user)
+    assert logged_in_menu?
     assert_no_selector 'div.alert-danger'
     assert_selector 'div.alert-notice'
     assert_text 'Welcome back!'
-    visit root_path
-    assert_no_selector 'div.alert'
+    click_link 'Log out'
+    assert_current_path root_path
+    assert_not logged_in_menu?
   end
 end
