@@ -47,6 +47,10 @@ class SessionsControllerTest < ActionController::TestCase
       assert_equal @user, current_user
     end
 
+    should 'remember the user' do
+      assert current_user.authenticated?(cookies[:remember_token])
+    end
+
     context 'and then deleting it' do
       setup do
         delete :destroy
