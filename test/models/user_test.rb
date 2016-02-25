@@ -13,6 +13,9 @@ class UserTest < ActiveSupport::TestCase
     should respond_to :password
     should respond_to :password_confirmation
     should respond_to :password_digest
+    should respond_to :remember_digest
+    should respond_to :remember
+    should respond_to :authenticated?
 
     should validate_presence_of :email
     should validate_presence_of :password
@@ -34,6 +37,32 @@ class UserTest < ActiveSupport::TestCase
       new_user = FactoryGirl.build(:user, email: email)
       new_user.save
       assert_equal(new_user.email, email.downcase)
+    end
+
+    should 'not have a remember token' do
+      assert_nil @user.remember_token
+    end
+
+    should 'not have a remember_digest' do
+      assert_nil @user.remember_digest
+    end
+
+    context 'that is remembered' do
+      setup do
+        @user.remember
+      end
+
+      should 'have a remember_token' do
+        assert_not_nil @user.remember_token
+      end
+
+      should 'have a remember_digest' do
+        assert_not_nil @user.remember_digest
+      end
+
+      should 'be authenticated' do
+        assert @user.authenticated?(@user.remember_token)
+      end
     end
   end
 end

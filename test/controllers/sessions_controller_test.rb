@@ -62,7 +62,7 @@ class SessionsControllerTest < ActionController::TestCase
     end
   end
 
-  context 'deleting without logged in user' do
+  context 'deleting session without logged in user' do
     setup do
       delete :destroy
     end

@@ -9,7 +9,7 @@ class RespondToMatcher
   end
 
   def failure_message
-    "Expected to respond to '#{@expected_symbol_name}'but did not"
+    "Expected to respond to '#{@expected_symbol_name}' but did not"
   end
 
   def negative_failure_message
