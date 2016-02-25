@@ -15,6 +15,7 @@ class UserTest < ActiveSupport::TestCase
     should respond_to :password_digest
     should respond_to :remember_digest
     should respond_to :remember
+    should respond_to :forget
     should respond_to :authenticated?
 
     should validate_presence_of :email
@@ -47,6 +48,10 @@ class UserTest < ActiveSupport::TestCase
       assert_nil @user.remember_digest
     end
 
+    should 'not be authenticated' do
+      assert_not @user.authenticated?('')
+    end
+
     context 'that is remembered' do
       setup do
         @user.remember
@@ -62,6 +67,16 @@ class UserTest < ActiveSupport::TestCase
 
       should 'be authenticated' do
         assert @user.authenticated?(@user.remember_token)
+      end
+
+      context 'and then forgotten' do
+        setup do
+          @user.forget
+        end
+
+        should 'not have a remember_digest' do
+          assert_nil @user.remember_digest
+        end
       end
     end
   end
