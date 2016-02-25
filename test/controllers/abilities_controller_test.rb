@@ -12,8 +12,8 @@ class AbilitiesControllerTest < ActionController::TestCase
     end
 
     should respond_with :success
-    should render_template('index')
-    should render_template(partial: '_list')
+    should render_template :index
+    should render_template partial: '_list'
     should_not set_flash
   end
 
@@ -23,8 +23,8 @@ class AbilitiesControllerTest < ActionController::TestCase
     end
 
     should respond_with :success
-    should render_template('new')
-    should render_template(partial: '_form')
+    should render_template :new
+    should render_template partial: '_form'
     should_not set_flash
   end
 
@@ -34,7 +34,7 @@ class AbilitiesControllerTest < ActionController::TestCase
     end
 
     should respond_with :success
-    should render_template('show')
+    should render_template :show
     should_not set_flash
   end
 
@@ -47,7 +47,7 @@ class AbilitiesControllerTest < ActionController::TestCase
 
     should respond_with :redirect
     should redirect_to('the URL for the new ability') { ability_path(assigns :ability) }
-    should set_flash
+    should set_flash[:notice]
 
     should 'create one ability' do
       assert_equal(Ability.count - @pre_count, 1)
@@ -60,8 +60,8 @@ class AbilitiesControllerTest < ActionController::TestCase
     end
 
     should respond_with :success
-    should render_template('edit')
-    should render_template(partial: '_form')
+    should render_template :edit
+    should render_template partial: '_form'
     should_not set_flash
   end
 
@@ -73,7 +73,7 @@ class AbilitiesControllerTest < ActionController::TestCase
 
     should respond_with :redirect
     should redirect_to('the URL for the edited ability') { ability_path(assigns :ability) }
-    should set_flash
+    should set_flash[:notice]
 
     should 'not change the ability count' do
       assert_equal(Ability.count, @pre_count)
@@ -88,7 +88,7 @@ class AbilitiesControllerTest < ActionController::TestCase
 
     should respond_with :redirect
     should redirect_to('the URL for abilities index') { abilities_path }
-    should set_flash
+    should set_flash[:notice]
 
     should 'delete one ability' do
       assert_equal(Ability.count - @pre_count, -1)

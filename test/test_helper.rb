@@ -14,6 +14,17 @@ Dir[Rails.root.join('test/matchers/**.*')].each { |f| require f }
 class ActiveSupport::TestCase
 end
 
+# Setup for controller tests
+class ActionController::TestCase
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def logged_in?
+    !current_user.nil?
+  end
+end
+
 # Setup capybara for integration tests
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
