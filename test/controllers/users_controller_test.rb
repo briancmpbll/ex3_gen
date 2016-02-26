@@ -6,45 +6,111 @@ class UsersControllerTest < ActionController::TestCase
     @user = FactoryGirl.create(:user)
   end
 
-  test 'should get index' do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:users)
+  context 'getting user index' do
+    setup do
+      get :index
+    end
+
+    should respond_with :success
+    should render_template :index
+    should_not set_flash
   end
 
-  test 'should get new' do
-    get :new
-    assert_response :success
+  context 'getting new user' do
+    setup do
+      get :new
+    end
+
+    should respond_with :success
+    should render_template :new
+    should render_template partial: '_form'
+    should_not set_flash
   end
 
-  test 'should create user' do
-    assert_difference('User.count') do
+  context 'showing user' do
+    setup do
+      get :show, id: @user
+    end
+
+    should respond_with :success
+    should render_template :show
+    should_not set_flash
+  end
+
+  context 'creating user with invalid information' do
+    setup do
+      @pre_count = User.count
+      post :create, user: { email: '', password: '', password_confirmation: '' }
+    end
+
+    should respond_with :success
+    should render_template :new
+    should_not set_flash
+
+    should 'not create a user' do
+      assert_equal(@pre_count, User.count)
+    end
+  end
+
+  context 'creating user with valid information' do
+    setup do
+      @pre_count = User.count
       post :create, user: FactoryGirl.attributes_for(:user)
     end
 
-    assert_redirected_to user_path(assigns(:user))
+    should respond_with :redirect
+    should redirect_to('the URL for the new user') { user_path(assigns :user) }
+    should set_flash[:notice]
+
+    should 'create a user' do
+      assert_equal(1, User.count - @pre_count)
+    end
+
+    should 'login a user' do
+      assert logged_in?
+    end
   end
 
-  test 'should show user' do
-    get :show, id: @user
-    assert_response :success
+  context 'getting edit user' do
+    setup do
+      get :edit, id: @user
+    end
+
+    should respond_with :success
+    should render_template :edit
+    should render_template partial: '_form'
+    should_not set_flash
   end
 
-  test 'should get edit' do
-    get :edit, id: @user
-    assert_response :success
+  context 'update user' do
+    setup do
+      @pre_count = User.count
+      patch :update, id: @user, user: { email: @user.email,
+                                        password: @user.password,
+                                        password_confirmation: @user.password_confirmation }
+    end
+
+    should respond_with :redirect
+    should redirect_to('the URL for the edited user') { user_path(assigns :user) }
+    should set_flash[:notice]
+
+    should 'not change the user count' do
+      assert_equal(@pre_count, User.count)
+    end
   end
 
-  test 'should update user' do
-    patch :update, id: @user, user: FactoryGirl.attributes_for(:user)
-    assert_redirected_to user_path(assigns(:user))
-  end
-
-  test 'should destroy user' do
-    assert_difference('User.count', -1) do
+  context 'deleting a user' do
+    setup do
+      @pre_count = User.count
       delete :destroy, id: @user
     end
 
-    assert_redirected_to users_path
+    should respond_with :redirect
+    should redirect_to('the URL for user index') { users_path }
+    should set_flash[:notice]
+
+    should 'delete one ability' do
+      assert_equal(-1, User.count - @pre_count)
+    end
   end
 end

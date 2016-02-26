@@ -50,7 +50,7 @@ class AbilitiesControllerTest < ActionController::TestCase
     should set_flash[:notice]
 
     should 'create one ability' do
-      assert_equal(Ability.count - @pre_count, 1)
+      assert_equal(1, Ability.count - @pre_count)
     end
   end
 
@@ -76,7 +76,7 @@ class AbilitiesControllerTest < ActionController::TestCase
     should set_flash[:notice]
 
     should 'not change the ability count' do
-      assert_equal(Ability.count, @pre_count)
+      assert_equal(@pre_count, Ability.count)
     end
   end
 
@@ -91,7 +91,7 @@ class AbilitiesControllerTest < ActionController::TestCase
     should set_flash[:notice]
 
     should 'delete one ability' do
-      assert_equal(Ability.count - @pre_count, -1)
+      assert_equal(-1, Ability.count - @pre_count)
     end
   end
 end
