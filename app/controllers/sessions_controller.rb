@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(session_params[:password])
       log_in user
-      remember user
+      remember_if_checked user
       redirect_to user, notice: 'Welcome back!'
     else
       flash.now[:danger] = 'Invalid email/password combination'
@@ -24,8 +24,12 @@ class SessionsController < ApplicationController
   private
 
   def session_params
-    permitted = params.require(:session).permit(:email, :password)
+    permitted = params.require(:session).permit(:email, :password, :remember_me)
     permitted[:email].downcase
     permitted
+  end
+
+  def remember_if_checked(user)
+    session_params[:remember_me] == '1' ? remember(user) : forget(user)
   end
 end

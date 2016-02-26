@@ -16,12 +16,12 @@ end
 
 # Setup for controller tests
 class ActionController::TestCase
-  def current_user
+  def current_user_test
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
-  def logged_in?
-    !current_user.nil?
+  def logged_in_test?
+    !current_user_test.nil?
   end
 end
 

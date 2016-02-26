@@ -26,13 +26,13 @@ class SessionsControllerTest < ActionController::TestCase
     should set_flash.now[:danger]
 
     should 'not log in a user' do
-      assert_not logged_in?
+      assert_not logged_in_test?
     end
   end
 
   context 'creating session with valid information' do
     setup do
-      post :create, session: { email: @user.email, password: @user.password }
+      post :create, session: { email: @user.email, password: @user.password, remember_me: '0' }
     end
 
     should respond_with :redirect
@@ -40,15 +40,15 @@ class SessionsControllerTest < ActionController::TestCase
     should set_flash[:notice]
 
     should 'log in a user' do
-      assert logged_in?
+      assert logged_in_test?
     end
 
     should 'log in the correct user' do
-      assert_equal @user, current_user
+      assert_equal @user, current_user_test
     end
 
-    should 'remember the user' do
-      assert current_user.authenticated?(cookies[:remember_token])
+    should 'not remember the user' do
+      assert !current_user_test.authenticated?(cookies[:remember_token])
     end
 
     context 'and then deleting it' do
@@ -61,8 +61,18 @@ class SessionsControllerTest < ActionController::TestCase
       should_not set_flash
 
       should 'log out the user' do
-        assert_not logged_in?
+        assert_not logged_in_test?
       end
+    end
+  end
+
+  context 'creating valid session with remember checked' do
+    setup do
+      post :create, session: { email: @user.email, password: @user.password, remember_me: '1' }
+    end
+
+    should 'remember the user' do
+      assert current_user_test.authenticated?(cookies[:remember_token])
     end
   end
 
@@ -76,7 +86,7 @@ class SessionsControllerTest < ActionController::TestCase
     should_not set_flash
 
     should 'not log in a user' do
-      assert_not logged_in?
+      assert_not logged_in_test?
     end
   end
 end

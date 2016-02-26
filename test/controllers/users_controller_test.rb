@@ -67,7 +67,7 @@ class UsersControllerTest < ActionController::TestCase
     end
 
     should 'login a user' do
-      assert logged_in?
+      assert logged_in_test?
     end
   end
 
