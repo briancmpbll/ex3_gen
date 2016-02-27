@@ -40,7 +40,7 @@ class UsersControllerTest < ActionController::TestCase
   context 'creating user with invalid information' do
     setup do
       @pre_count = User.count
-      post :create, user: { email: '', password: '', password_confirmation: '' }
+      post :create, user: { name: '', email: '', password: '', password_confirmation: '' }
     end
 
     should respond_with :success
@@ -60,7 +60,7 @@ class UsersControllerTest < ActionController::TestCase
 
     should respond_with :redirect
     should redirect_to('the URL for the new user') { user_path(assigns :user) }
-    should set_flash[:notice]
+    should set_flash[:success]
 
     should 'create a user' do
       assert_equal(1, User.count - @pre_count)
@@ -85,7 +85,8 @@ class UsersControllerTest < ActionController::TestCase
   context 'update user' do
     setup do
       @pre_count = User.count
-      patch :update, id: @user, user: { email: @user.email,
+      patch :update, id: @user, user: { name: @user.name,
+                                        email: @user.email,
                                         password: @user.password,
                                         password_confirmation: @user.password_confirmation }
     end

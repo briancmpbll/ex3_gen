@@ -19,6 +19,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   test 'signing up with valid information' do
     visit signup_path
     assert_difference('User.count', 1) do
+      fill_in 'Display name', with: @user.name
       fill_in 'Email', with: @user.email
       fill_in 'Password', with: @user.password
       fill_in 'Confirmation', with: @user.password_confirmation

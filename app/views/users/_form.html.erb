@@ -1,6 +1,9 @@
 <%= form_for(@user) do |f| %>
   <%= display_errors @user %>
 
+  <%= f.label :name, "Display name" %>
+  <%= f.text_field :name, class: 'form-control' %>
+
   <%= f.label :email %>
   <%= f.email_field :email, class: 'form-control' %>
 

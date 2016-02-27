@@ -33,6 +33,6 @@ class ActionDispatch::IntegrationTest
     (has_no_link? 'Log in') &&
       (has_link? 'Log out') &&
       (has_link? 'Profile') &&
-      (has_link? user.email)
+      (has_link? user.name)
   end
 end

@@ -9,6 +9,7 @@ class UserTest < ActiveSupport::TestCase
 
     should have_secure_password
 
+    should respond_to :name
     should respond_to :email
     should respond_to :password
     should respond_to :password_confirmation
@@ -18,11 +19,14 @@ class UserTest < ActiveSupport::TestCase
     should respond_to :forget
     should respond_to :authenticated?
 
+    should validate_presence_of :name
     should validate_presence_of :email
     should validate_presence_of :password
 
+    should validate_uniqueness_of(:name).case_insensitive
     should validate_uniqueness_of(:email).case_insensitive
 
+    should validate_length_of(:name).is_at_most(50)
     should validate_length_of(:email).is_at_most(50)
     should validate_length_of(:password).is_at_least(6)
 
