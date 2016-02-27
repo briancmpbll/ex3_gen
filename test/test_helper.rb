@@ -29,9 +29,10 @@ end
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
 
-  def logged_in_menu?
+  def logged_in_menu?(user)
     (has_no_link? 'Log in') &&
       (has_link? 'Log out') &&
-      (has_link? 'Profile')
+      (has_link? 'Profile') &&
+      (has_link? user.email)
   end
 end

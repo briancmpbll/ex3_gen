@@ -11,7 +11,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_no_difference('User.count') do
       click_button 'Create my account'
     end
-    assert_not logged_in_menu?
+    assert_not logged_in_menu? @user
     assert_current_path users_path
     assert_selector 'div#error_explanation'
   end
@@ -26,6 +26,6 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     assert_current_path user_path(User.order('created_at').last)
     assert_no_selector 'div#error_explanation'
-    assert logged_in_menu?
+    assert logged_in_menu? @user
   end
 end
