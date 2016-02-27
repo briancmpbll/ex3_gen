@@ -1,15 +1,5 @@
 <%= form_for(@attribute_category) do |f| %>
-  <% if @attribute_category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@attribute_category.errors.count, "error") %> prohibited this attribute_category from being saved:</h2>
-
-      <ul>
-      <% @attribute_category.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= display_errors @attribute_category %>
 
   <div class="field">
     <%= f.label :name %><br>
