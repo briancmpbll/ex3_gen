@@ -1,7 +1,7 @@
 # Controller for creating and managing Users
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :check_logged_in, only: [:edit, :update]
+  before_action :check_logged_in, only: [:index, :edit, :update]
   before_action :check_correct_user, only: [:edit, :update]
 
   def index

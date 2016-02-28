@@ -17,4 +17,9 @@ module ApplicationHelper
   def edit_action?
     %w(edit update).include? params[:action]
   end
+
+  # Sets the title for the page.
+  def provide_title(title)
+    provide :title, title
+  end
 end

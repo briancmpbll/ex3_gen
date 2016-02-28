@@ -6,16 +6,6 @@ class UsersControllerTest < ActionController::TestCase
     @user = FactoryGirl.create(:user)
   end
 
-  context 'getting user index' do
-    setup do
-      get :index
-    end
-
-    should respond_with :success
-    should render_template :index
-    should_not set_flash
-  end
-
   context 'getting new user' do
     setup do
       get :new
@@ -58,7 +48,6 @@ class UsersControllerTest < ActionController::TestCase
       post :create, user: FactoryGirl.attributes_for(:user)
     end
 
-    should respond_with :redirect
     should redirect_to('the URL for the new user') { user_path(assigns :user) }
     should set_flash[:success]
 
@@ -72,13 +61,21 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   context 'when not logged in' do
+    context 'getting user index' do
+      setup do
+        get :index
+      end
+
+      should redirect_to_login
+      should set_flash[:danger]
+    end
+
     context 'getting edit user' do
       setup do
         get :edit, id: @user
       end
 
-      should respond_with :redirect
-      should redirect_to('the login path') { login_path }
+      should redirect_to_login
       should set_flash[:danger]
     end
 
@@ -89,8 +86,7 @@ class UsersControllerTest < ActionController::TestCase
         patch :update, id: @user, user: FactoryGirl.attributes_for(:user)
       end
 
-      should respond_with :redirect
-      should redirect_to('the login path') { login_path }
+      should redirect_to_login
       should set_flash[:danger]
 
       should 'not change the user count' do
@@ -106,6 +102,16 @@ class UsersControllerTest < ActionController::TestCase
   context 'when logged in' do
     setup do
       log_in_as @user
+    end
+
+    context 'getting user index' do
+      setup do
+        get :index
+      end
+
+      should respond_with :success
+      should render_template :index
+      should_not set_flash
     end
 
     context 'getting edit user' do
@@ -127,7 +133,6 @@ class UsersControllerTest < ActionController::TestCase
                                           email: @new_user.email }
       end
 
-      should respond_with :redirect
       should redirect_to('the URL for the edited user') { user_path(assigns :user) }
       should set_flash[:success]
 
@@ -150,7 +155,6 @@ class UsersControllerTest < ActionController::TestCase
         get :edit, id: @new_user
       end
 
-      should respond_with :redirect
       should redirect_to '/'
       should_not set_flash
     end
@@ -161,7 +165,6 @@ class UsersControllerTest < ActionController::TestCase
         get :edit, id: @new_user
       end
 
-      should respond_with :redirect
       should redirect_to '/'
       should_not set_flash
     end
@@ -173,7 +176,6 @@ class UsersControllerTest < ActionController::TestCase
       delete :destroy, id: @user
     end
 
-    should respond_with :redirect
     should redirect_to('the URL for user index') { users_path }
     should set_flash[:notice]
 

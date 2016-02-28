@@ -7,6 +7,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+load(Rails.root.join('db', 'seeds', "#{Rails.env.downcase}.rb"))
+
 physical = AttributeCategory.create(name: 'Physical')
 social   = AttributeCategory.create(name: 'Social')
 mental   = AttributeCategory.create(name: 'Mental')
