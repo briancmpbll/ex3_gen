@@ -37,7 +37,7 @@ class SessionsControllerTest < ActionController::TestCase
 
     should respond_with :redirect
     should redirect_to('the URL for the logged in profile') { user_path(@user) }
-    should set_flash[:success]
+    should_not set_flash
 
     should 'log in a user' do
       assert logged_in_test?

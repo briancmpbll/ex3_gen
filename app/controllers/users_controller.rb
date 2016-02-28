@@ -62,8 +62,9 @@ class UsersController < ApplicationController
 
   # Confirms a logged in user before accessing restricted pages
   def check_logged_in
-    redirect_to login_path,
-                flash: { danger: 'Please log in to access this page.' } unless logged_in?
+    return if logged_in?
+    store_location
+    redirect_to login_path, flash: { danger: 'Please log in to access this page.' }
   end
 
   # Confirmas the correct user before accessing restricted pages

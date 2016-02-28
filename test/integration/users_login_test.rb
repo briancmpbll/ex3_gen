@@ -23,8 +23,6 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_current_path user_path(@user)
     assert logged_in_menu? @user
     assert_no_selector 'div.alert-danger'
-    assert_selector 'div.alert-success'
-    assert_text 'Welcome back!'
     click_link 'Log out'
     assert_current_path root_path
     assert_not logged_in_menu? @user
