@@ -7,6 +7,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
   end
 
   test 'unsuccessful edit' do
+    log_in_as @user
     visit edit_user_path @user
     fill_in 'Display name', with: ''
     fill_in 'Email', with: ''
@@ -18,7 +19,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
   test 'successful edit' do
     name = 'new name'
     email = 'new@email.com'
-
+    log_in_as @user
     visit edit_user_path @user
     fill_in 'Display name', with: name
     fill_in 'Email', with: email

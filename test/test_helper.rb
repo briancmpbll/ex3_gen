@@ -12,6 +12,24 @@ Dir[Rails.root.join('test/matchers/**.*')].each { |f| require f }
 
 # Setup for all tests
 class ActiveSupport::TestCase
+  # Log in as a test user
+  def log_in_as(user)
+    if integration_test?
+      visit login_path
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      click_button 'Log in'
+    else
+      session[:user_id] = user.id
+    end
+  end
+
+  private
+
+  # Returns true inside an integration test.
+  def integration_test?
+    defined?(post_via_redirect)
+  end
 end
 
 # Setup for controller tests
