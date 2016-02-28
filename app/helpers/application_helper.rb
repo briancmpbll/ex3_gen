@@ -22,4 +22,9 @@ module ApplicationHelper
   def provide_title(title)
     provide :title, title
   end
+
+  # Renders pagination links for the given collection.
+  def paginate(collection)
+    will_paginate collection, renderer: BootstrapPagination::Rails
+  end
 end

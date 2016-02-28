@@ -19,6 +19,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
   test 'successful edit with friendly forwarding' do
     visit edit_user_path @user
     assert_current_path login_path
+    assert_selector '.alert-danger'
     log_in_as @user
     assert_current_path edit_user_path(@user)
     fill_in 'Display name', with: 'new name'
