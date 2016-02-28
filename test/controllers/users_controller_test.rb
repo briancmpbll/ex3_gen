@@ -93,7 +93,7 @@ class UsersControllerTest < ActionController::TestCase
 
     should respond_with :redirect
     should redirect_to('the URL for the edited user') { user_path(assigns :user) }
-    should set_flash[:notice]
+    should set_flash[:success]
 
     should 'not change the user count' do
       assert_equal(@pre_count, User.count)

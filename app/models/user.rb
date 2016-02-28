@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false },
                     format: /.+@.+\..+/
 
-  validates :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 }, allow_nil: true
 
   # Returns the hash digest of the given string.
   def self.digest(string)
