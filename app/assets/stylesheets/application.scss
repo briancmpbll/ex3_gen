@@ -34,9 +34,11 @@ textarea {
   }
 }
 
-a:hover {
-  background-color: unset;
-  text-decoration: none;
+a {
+  &:hover, &:focus {
+    background-color: unset;
+    text-decoration: none;
+  }
 }
 
 /* typography */
