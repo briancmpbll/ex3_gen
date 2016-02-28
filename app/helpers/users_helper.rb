@@ -6,4 +6,9 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     image_tag(gravatar_url, alt: user.email, class: 'gravatar')
   end
+
+  # Returns the string to show on the form button depending on the action.
+  def submit_text
+    edit_action? ? 'Save changes' : 'Create my account'
+  end
 end

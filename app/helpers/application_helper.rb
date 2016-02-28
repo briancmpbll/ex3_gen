@@ -9,4 +9,8 @@ module ApplicationHelper
   def display_errors(object)
     render partial: 'shared/error_messages', locals: { object: object }
   end
+
+  def edit_action?
+    %w(edit update).include? params[:action]
+  end
 end
