@@ -71,32 +71,99 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
-  context 'getting edit user' do
-    setup do
-      get :edit, id: @user
+  context 'when not logged in' do
+    context 'getting edit user' do
+      setup do
+        get :edit, id: @user
+      end
+
+      should respond_with :redirect
+      should redirect_to('the login path') { login_path }
+      should set_flash[:danger]
     end
 
-    should respond_with :success
-    should render_template :edit
-    should render_template partial: '_form'
-    should_not set_flash
+    context 'update user' do
+      setup do
+        @pre_count = User.count
+        @old_user = @user
+        patch :update, id: @user, user: FactoryGirl.attributes_for(:user)
+      end
+
+      should respond_with :redirect
+      should redirect_to('the login path') { login_path }
+      should set_flash[:danger]
+
+      should 'not change the user count' do
+        assert_equal(@pre_count, User.count)
+      end
+
+      should 'not change the user' do
+        assert_equal(@old_user, @user)
+      end
+    end
   end
 
-  context 'update user' do
+  context 'when logged in' do
     setup do
-      @pre_count = User.count
-      patch :update, id: @user, user: { name: @user.name,
-                                        email: @user.email,
-                                        password: @user.password,
-                                        password_confirmation: @user.password_confirmation }
+      log_in_as @user
     end
 
-    should respond_with :redirect
-    should redirect_to('the URL for the edited user') { user_path(assigns :user) }
-    should set_flash[:success]
+    context 'getting edit user' do
+      setup do
+        get :edit, id: @user
+      end
 
-    should 'not change the user count' do
-      assert_equal(@pre_count, User.count)
+      should respond_with :success
+      should render_template :edit
+      should render_template partial: '_form'
+      should_not set_flash
+    end
+
+    context 'update user' do
+      setup do
+        @pre_count = User.count
+        @new_user = FactoryGirl.build(:user)
+        patch :update, id: @user, user: { name: @new_user.name,
+                                          email: @new_user.email }
+      end
+
+      should respond_with :redirect
+      should redirect_to('the URL for the edited user') { user_path(assigns :user) }
+      should set_flash[:success]
+
+      should 'not change the user count' do
+        assert_equal(@pre_count, User.count)
+      end
+
+      should 'change the user name' do
+        assert_equal(User.find(@user.id).name, @new_user.name)
+      end
+
+      should 'change the user email' do
+        assert_equal(User.find(@user.id).email, @new_user.email)
+      end
+    end
+
+    context 'trying to edit another user' do
+      setup do
+        @new_user = FactoryGirl.create(:user)
+        get :edit, id: @new_user
+      end
+
+      should respond_with :redirect
+      should redirect_to '/'
+      should_not set_flash
+    end
+
+    context 'trying to update anotether user' do
+      setup do
+        @new_user = FactoryGirl.create(:user)
+        get :edit, id: @new_user
+      end
+
+      should respond_with :redirect
+      should redirect_to '/'
+      should_not set_flash
     end
   end
 

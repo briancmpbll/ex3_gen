@@ -1,6 +1,8 @@
 # Controller for creating and managing Users
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_logged_in, only: [:edit, :update]
+  before_action :check_correct_user, only: [:edit, :update]
 
   def index
     @users = User.all
@@ -56,6 +58,17 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
+  end
+
+  # Confirms a logged in user before accessing restricted pages
+  def check_logged_in
+    redirect_to login_path,
+                flash: { danger: 'Please log in to access this page.' } unless logged_in?
+  end
+
+  # Confirmas the correct user before accessing restricted pages
+  def check_correct_user
+    redirect_to root_path unless current_user?(@user)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

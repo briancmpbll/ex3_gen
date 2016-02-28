@@ -19,10 +19,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   end
 
   test 'login with a valid user followed by logout' do
-    visit login_path
-    fill_in 'Email', with: @user.email
-    fill_in 'Password', with: @user.password
-    click_button 'Log in'
+    log_in_as @user
     assert_current_path user_path(@user)
     assert logged_in_menu? @user
     assert_no_selector 'div.alert-danger'
