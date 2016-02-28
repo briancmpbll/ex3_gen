@@ -16,13 +16,13 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_selector '#error_explanation'
   end
 
-  test 'successful edit' do
-    name = 'new name'
-    email = 'new@email.com'
-    log_in_as @user
+  test 'successful edit with friendly forwarding' do
     visit edit_user_path @user
-    fill_in 'Display name', with: name
-    fill_in 'Email', with: email
+    assert_current_path login_path
+    log_in_as @user
+    assert_current_path edit_user_path(@user)
+    fill_in 'Display name', with: 'new name'
+    fill_in 'Email', with: 'new@email.com'
     click_button 'Save changes'
     assert_no_text 'Update your profile'
     assert_selector 'div.alert-success'
