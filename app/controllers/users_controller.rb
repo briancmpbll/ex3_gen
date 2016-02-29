@@ -1,8 +1,9 @@
 # Controller for creating and managing Users
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :check_logged_in, only: [:index, :edit, :update]
+  before_action :check_logged_in, only: [:index, :edit, :update, :destroy]
   before_action :check_correct_user, only: [:edit, :update]
+  before_action :check_admin_user, only: [:destroy]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -48,7 +49,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, flash: { success: 'User deleted.' } }
       format.json { head :no_content }
     end
   end
@@ -67,9 +68,15 @@ class UsersController < ApplicationController
     redirect_to login_path, flash: { danger: 'Please log in to access this page.' }
   end
 
-  # Confirmas the correct user before accessing restricted pages
+  # Confirms the correct user before accessing restricted pages
   def check_correct_user
     redirect_to root_path unless current_user?(@user)
+  end
+
+  # Confirms that the logged in user is an admin before accessing restricted pages
+  def check_admin_user
+    redirect_to root_path unless current_user.admin?
+    redirect_to users_path, flash: { danger: 'You cannot delete yourself.' } if current_user?(@user)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -4,6 +4,8 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   setup do
     @user = FactoryGirl.create(:user)
+    @other_user = FactoryGirl.create(:user)
+    @admin_user = FactoryGirl.create(:admin_user)
   end
 
   context 'getting new user' do
@@ -82,7 +84,6 @@ class UsersControllerTest < ActionController::TestCase
     context 'update user' do
       setup do
         @pre_count = User.count
-        @old_user = @user
         patch :update, id: @user, user: FactoryGirl.attributes_for(:user)
       end
 
@@ -94,12 +95,26 @@ class UsersControllerTest < ActionController::TestCase
       end
 
       should 'not change the user' do
-        assert_equal(@old_user, @user)
+        assert_equal(@user, User.find(@user.id))
+      end
+    end
+
+    context 'deleting a user' do
+      setup do
+        @pre_count = User.count
+        delete :destroy, id: @user
+      end
+
+      should redirect_to_login
+      should set_flash[:danger]
+
+      should 'not delete a user' do
+        assert_equal(User.count, @pre_count)
       end
     end
   end
 
-  context 'when logged in' do
+  context 'when logged in as a normal user' do
     setup do
       log_in_as @user
     end
@@ -130,7 +145,8 @@ class UsersControllerTest < ActionController::TestCase
         @pre_count = User.count
         @new_user = FactoryGirl.build(:user)
         patch :update, id: @user, user: { name: @new_user.name,
-                                          email: @new_user.email }
+                                          email: @new_user.email,
+                                          admin: true }
       end
 
       should redirect_to('the URL for the edited user') { user_path(assigns :user) }
@@ -147,40 +163,80 @@ class UsersControllerTest < ActionController::TestCase
       should 'change the user email' do
         assert_equal(User.find(@user.id).email, @new_user.email)
       end
+
+      should 'not change the admin flag' do
+        assert_not User.find(@user.id).admin?
+      end
     end
 
-    context 'trying to edit another user' do
+    context 'editing another user' do
       setup do
-        @new_user = FactoryGirl.create(:user)
-        get :edit, id: @new_user
+        get :edit, id: @other_user
       end
 
-      should redirect_to '/'
+      should redirect_to_root
       should_not set_flash
     end
 
-    context 'trying to update anotether user' do
+    context 'updating another user' do
       setup do
-        @new_user = FactoryGirl.create(:user)
-        get :edit, id: @new_user
+        get :edit, id: @other_user
       end
 
-      should redirect_to '/'
+      should redirect_to_root
       should_not set_flash
+    end
+
+    context 'deleting a user' do
+      setup do
+        @pre_count = User.count
+        delete :destroy, id: @other_user
+      end
+
+      should redirect_to_root
+      should_not set_flash
+
+      should 'not delete a user' do
+        assert_equal(User.count, @pre_count)
+      end
     end
   end
 
-  context 'deleting a user' do
+  context 'when logged in as an admin' do
     setup do
-      @pre_count = User.count
-      delete :destroy, id: @user
+      log_in_as @admin_user
     end
 
-    should redirect_to('the URL for user index') { users_path }
-    should set_flash[:notice]
+    context 'deleting a user' do
+      setup do
+        @pre_count = User.count
+        delete :destroy, id: @other_user
+      end
 
-    should 'delete one ability' do
-      assert_equal(-1, User.count - @pre_count)
+      should redirect_to_user_index
+      should set_flash[:success]
+
+      should 'delete a user' do
+        assert_equal(-1, User.count - @pre_count)
+      end
+
+      should 'delete the right user' do
+        assert_raises(ActiveRecord::RecordNotFound) { User.find(@other_user.id) }
+      end
+    end
+
+    context 'deleting self' do
+      setup do
+        @pre_count = User.count
+        delete :destroy, id: @admin_user
+      end
+
+      should redirect_to_user_index
+      should set_flash[:danger]
+
+      should 'not delete the user' do
+        assert_equal(@pre_count, User.count)
+      end
     end
   end
 end

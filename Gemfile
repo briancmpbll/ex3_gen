@@ -58,4 +58,5 @@ group :test do
   gem 'shoulda'
   gem 'mocha'
   gem 'capybara'
+  gem 'selenium-webdriver'
 end

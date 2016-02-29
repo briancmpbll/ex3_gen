@@ -57,7 +57,7 @@ class SessionsControllerTest < ActionController::TestCase
       end
 
       should respond_with :redirect
-      should redirect_to('the root path') { '/' }
+      should redirect_to_root
       should_not set_flash
 
       should 'log out the user' do
@@ -82,7 +82,7 @@ class SessionsControllerTest < ActionController::TestCase
     end
 
     should respond_with :redirect
-    should redirect_to('the root path') { '/' }
+    should redirect_to_root
     should_not set_flash
 
     should 'not log in a user' do

@@ -15,6 +15,7 @@ class UserTest < ActiveSupport::TestCase
     should respond_to :password_confirmation
     should respond_to :password_digest
     should respond_to :remember_digest
+    should respond_to :admin?
     should respond_to :remember
     should respond_to :forget
     should respond_to :authenticated?

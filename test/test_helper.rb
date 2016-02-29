@@ -12,6 +12,8 @@ Dir[Rails.root.join('test/matchers/**.*')].each { |f| require f }
 
 # Setup for all tests
 class ActiveSupport::TestCase
+  include Rails.application.routes.url_helpers
+
   # Log in as a test user
   def log_in_as(user)
     if integration_test?
@@ -46,6 +48,7 @@ end
 # Setup capybara for integration tests
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
+  self.use_transactional_fixtures = false
 
   def logged_in_menu?(user)
     (has_no_link? 'Log in') &&
