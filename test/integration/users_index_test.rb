@@ -3,10 +3,10 @@ require 'test_helper'
 # Integration test for the users index.
 class UsersIndexTest < ActionDispatch::IntegrationTest
   setup do
+    Capybara.current_driver = :selenium
     @admin_user = FactoryGirl.create(:admin_user)
     @user = FactoryGirl.create(:user)
-    99.times { FactoryGirl.create(:user) }
-    Capybara.current_driver = :selenium
+    40.times { FactoryGirl.create(:user) }
   end
 
   teardown do
@@ -21,21 +21,15 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_current_path users_path
     assert_selector 'ul.pagination'
     assert_no_text 'delete'
-    User.paginate(page: 1).each do |user|
-      assert has_link? user.name, href: user_path(user)
-    end
+    assert has_link? user.name, href: user_path(@user)
+    assert has_link? user.name, href: user_path(@admin_user)
   end
 
   test 'index as admin' do
     log_in_as @admin_user
     visit users_path
-    User.paginate(page: 1).each do |user|
-      if user == @admin_user
-        assert has_no_link? 'delete', href: user_path(user)
-      else
-        assert has_link? 'delete', href: user_path(user)
-      end
-    end
+    assert has_link? 'delete', href: user_path(@user)
+    assert has_no_link? 'delete', href: user_path(@admin_user)
     accept_alert 'Are you sure?' do
       click_link 'delete', href: user_path(@user)
     end

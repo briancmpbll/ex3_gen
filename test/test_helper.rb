@@ -5,14 +5,37 @@ require 'rails/test_help'
 require 'capybara/rails'
 require 'shoulda'
 require 'factory_girl'
+require 'database_cleaner'
 FactoryGirl.find_definitions
+DatabaseCleaner.strategy = :truncation
 
 Dir[Rails.root.join('test/modules/**.*')].each { |f| require f }
 Dir[Rails.root.join('test/matchers/**.*')].each { |f| require f }
 
 # Setup for all tests
 class ActiveSupport::TestCase
-  include Rails.application.routes.url_helpers
+  self.use_transactional_fixtures = false
+  setup do
+    DatabaseCleaner.start
+  end
+
+  teardown do
+    DatabaseCleaner.clean
+  end
+
+  def current_user_test
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def logged_in_test?
+    if integration_test?
+      (has_no_link? 'Log in') &&
+        (has_link? 'Log out') &&
+        (has_link? 'Profile')
+    else
+      !current_user_test.nil?
+    end
+  end
 
   # Log in as a test user
   def log_in_as(user)
@@ -26,6 +49,15 @@ class ActiveSupport::TestCase
     end
   end
 
+  # Log out from the current user
+  def log_out
+    if integration_test?
+      click_link 'Log out' if logged_in_test?
+    else
+      session.delete(:user_id)
+    end
+  end
+
   private
 
   # Returns true inside an integration test.
@@ -34,26 +66,11 @@ class ActiveSupport::TestCase
   end
 end
 
-# Setup for controller tests
-class ActionController::TestCase
-  def current_user_test
-    @current_user ||= User.find_by(id: session[:user_id])
-  end
-
-  def logged_in_test?
-    !current_user_test.nil?
-  end
-end
-
 # Setup capybara for integration tests
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
-  self.use_transactional_fixtures = false
 
-  def logged_in_menu?(user)
-    (has_no_link? 'Log in') &&
-      (has_link? 'Log out') &&
-      (has_link? 'Profile') &&
-      (has_link? user.name)
+  teardown do
+    log_out
   end
 end
