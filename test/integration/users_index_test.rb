@@ -14,15 +14,12 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
   end
 
   test 'index including pagination' do
-    visit users_path
-    assert_current_path login_path
-    assert_selector '.alert-danger'
     log_in_as @user
-    assert_current_path users_path
+    visit users_path
     assert_selector 'ul.pagination'
     assert_no_text 'delete'
-    assert has_link? user.name, href: user_path(@user)
-    assert has_link? user.name, href: user_path(@admin_user)
+    assert has_link? @user.name, href: user_path(@user)
+    assert has_link? @admin_user.name, href: user_path(@admin_user)
   end
 
   test 'index as admin' do
@@ -33,5 +30,8 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     accept_alert 'Are you sure?' do
       click_link 'delete', href: user_path(@user)
     end
+    assert_current_path users_path
+    assert has_text? 'User deleted.'
+    assert has_no_text? @user.name
   end
 end

@@ -58,6 +58,7 @@ group :test do
   gem 'shoulda'
   gem 'mocha'
   gem 'capybara'
+  gem 'selenium'
   gem 'selenium-webdriver'
   gem 'database_cleaner'
 end

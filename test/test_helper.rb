@@ -52,7 +52,9 @@ class ActiveSupport::TestCase
   # Log out from the current user
   def log_out
     if integration_test?
-      click_link 'Log out' if logged_in_test?
+      return unless logged_in_test?
+      click_link 'user_dropdown'
+      click_link 'Log out'
     else
       session.delete(:user_id)
     end
